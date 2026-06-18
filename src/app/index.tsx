@@ -1,10 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
+import { StyleSheet } from "react-native";
 
 export default function Index() {
   return (
-    <View style={styles.container}>
-      <Text>Edit src/app/index.tsx to edit this screen.</Text>
-    </View>
+    <ThemedView style={styles.container}>
+      <ThemedText>Edit src/app/index.tsx to edit this screen.</ThemedText>
+    </ThemedView>
   );
 }
 
