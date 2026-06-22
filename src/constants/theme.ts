@@ -37,4 +37,39 @@ export const Spacing = {
   six: 64,
 } as const;
 
+export const Typography = {
+  headline: {
+    fontSize: 36,
+    fontWeight: 700,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 700,
+  },
+  heading: {
+    fontSize: 20,
+    fontWeight: 700,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: 700,
+  },
+  link: {
+    fontSize: 18,
+    fontWeight: 700,
+  },
+  normal: {
+    fontSize: 16,
+    fontWeight: 400,
+  },
+  button: {
+    fontSize: 14,
+    fontWeight: 300,
+  },
+  subtext: {
+    fontSize: 10,
+    fontWeight: 200,
+  },
+} as const
+
 export const MaxContentWidth = 800;

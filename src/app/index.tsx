@@ -1,14 +1,16 @@
 import { NavTile } from "@/components/nav-tile";
 import { ThemedView } from "@/components/themed-view";
 import { Spacing } from "@/constants/theme";
+import { useRouter } from "expo-router";
 import { StyleSheet } from "react-native";
 
 export default function Index() {
+  const router = useRouter();
   return (
     <ThemedView style={styles.container}>
-      <NavTile label="Game 1" url="test"></NavTile>
-      <NavTile label="Game 2" url="test"></NavTile>
-      <NavTile label="Game 3" url="test"></NavTile>
+      <NavTile label="Yahtzee" url="/yahtzee"></NavTile>
+      <NavTile label="Game 2" url="/"></NavTile>
+      <NavTile label="Game 3" url="/"></NavTile>
     </ThemedView>
   );
 }
@@ -21,6 +23,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: Spacing.four,
     flexWrap: "wrap",
-    paddingTop: Spacing.five
+    paddingTop: Spacing.five,
   },
 });
