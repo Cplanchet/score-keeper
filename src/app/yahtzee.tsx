@@ -1,8 +1,25 @@
+import BoxInput from "@/components/box-input";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 export default function Yahtzee() {
+  const [getAceScore, setAceScore] = useState<number | null>(null);
+  const [getTwoScore, setTwoScore] = useState<number | null>(null);
+  const [getThreeScore, setThreeScore] = useState<number | null>(null);
+  const [getFourScore, setFourScore] = useState<number | null>(null);
+  const [getFiveScore, setFiveScore] = useState<number | null>(null);
+  const [getSixScore, setSixScore] = useState<number | null>(null);
+
+  const [getThreeOfKind, setThreeOfKind] = useState<number | null>(null);
+  const [getFourOfKind, setFourOfKind] = useState<number | null>(null);
+  const [getFullHouse, setFullHouse] = useState<number | null>(null);
+  const [getSmallStraight, setSmallStraight] = useState<number | null>(null);
+  const [getLargeStraight, setLargeStraight] = useState<number | null>(null);
+  const [getYahtzee, setYahtzee] = useState<number | null>(null);
+  const [getBonus, setBonus] = useState<number | null>(null);
+  const [getChance, setChance] = useState<number | null>(null);
   return (
     <ThemedView style={styles.root}>
       <ThemedText type="heading" align="center">
@@ -11,58 +28,99 @@ export default function Yahtzee() {
       <View style={styles.table}>
         <View style={styles.row}>
           <ThemedText>Ace</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getAceScore?.toString() || ""}
+            onChange={(value) => setAceScore(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Duece</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getTwoScore?.toString() || ""}
+            onChange={(value) => setTwoScore(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Three</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getThreeScore?.toString() || ""}
+            onChange={(value) => setThreeScore(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Four</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getFourScore?.toString() || ""}
+            onChange={(value) => setFourScore(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Five</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getFiveScore?.toString() || ""}
+            onChange={(value) => setFiveScore(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Six</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getSixScore?.toString() || ""}
+            onChange={(value) => setSixScore(value ? parseInt(value) : null)}
+          />
         </View>
         <ThemedText type="heading" align="center">
           Bottom
         </ThemedText>
         <View style={styles.row}>
           <ThemedText>3 of a Kind</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getThreeOfKind?.toString() || ""}
+            onChange={(value) => setThreeOfKind(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>4 of a Kind</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getFourOfKind?.toString() || ""}
+            onChange={(value) => setFourOfKind(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Full House</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getFullHouse?.toString() || ""}
+            onChange={(value) => setFullHouse(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Sm. Straight</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getSmallStraight?.toString() || ""}
+            onChange={(value) =>
+              setSmallStraight(value ? parseInt(value) : null)
+            }
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Yahtzee</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getYahtzee?.toString() || ""}
+            onChange={(value) => setYahtzee(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Bonus</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getBonus?.toString() || ""}
+            onChange={(value) => setBonus(value ? parseInt(value) : null)}
+          />
         </View>
         <View style={styles.row}>
           <ThemedText>Chance</ThemedText>
-          <ThemedText>100</ThemedText>
+          <BoxInput
+            value={getChance?.toString() || ""}
+            onChange={(value) => setChance(value ? parseInt(value) : null)}
+          />
         </View>
         <ThemedText align="center">Total Score: --</ThemedText>
       </View>
@@ -87,6 +145,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     gap: 24,
   },
 });
