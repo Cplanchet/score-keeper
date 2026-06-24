@@ -12,7 +12,7 @@ export default function BoxInput({
   value,
   onChange,
   onBlur,
-  size = 36,
+  size = 30,
 }: BoxInputProps) {
   const theme = useTheme();
   const styles = StyleSheet.create({

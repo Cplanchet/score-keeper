@@ -9,7 +9,7 @@ export default function Index() {
   return (
     <ThemedView style={styles.container}>
       <NavTile label="Yahtzee" url="/yahtzee"></NavTile>
-      <NavTile label="Game 2" url="/"></NavTile>
+      <NavTile label="Game 2" url="/typography"></NavTile>
       <NavTile label="Game 3" url="/"></NavTile>
     </ThemedView>
   );

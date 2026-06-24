@@ -1,130 +1,249 @@
 import BoxInput from "@/components/box-input";
+import Checkbox from "@/components/checkbox";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import YahtzeeScoreCard from "@/models/yahtzee-score";
+
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 
 export default function Yahtzee() {
-  const [getAceScore, setAceScore] = useState<number | null>(null);
-  const [getTwoScore, setTwoScore] = useState<number | null>(null);
-  const [getThreeScore, setThreeScore] = useState<number | null>(null);
-  const [getFourScore, setFourScore] = useState<number | null>(null);
-  const [getFiveScore, setFiveScore] = useState<number | null>(null);
-  const [getSixScore, setSixScore] = useState<number | null>(null);
+  const [getScoreCard, setScoreCard] = useState<YahtzeeScoreCard>(
+    YahtzeeScoreCard.empty(),
+  );
 
-  const [getThreeOfKind, setThreeOfKind] = useState<number | null>(null);
-  const [getFourOfKind, setFourOfKind] = useState<number | null>(null);
-  const [getFullHouse, setFullHouse] = useState<number | null>(null);
-  const [getSmallStraight, setSmallStraight] = useState<number | null>(null);
-  const [getLargeStraight, setLargeStraight] = useState<number | null>(null);
-  const [getYahtzee, setYahtzee] = useState<number | null>(null);
-  const [getBonus, setBonus] = useState<number | null>(null);
-  const [getChance, setChance] = useState<number | null>(null);
+  const boxSize = 30;
+
   return (
-    <ThemedView style={styles.root}>
-      <ThemedText type="heading" align="center">
-        Top
-      </ThemedText>
-      <View style={styles.table}>
-        <View style={styles.row}>
-          <ThemedText>Ace</ThemedText>
-          <BoxInput
-            value={getAceScore?.toString() || ""}
-            onChange={(value) => setAceScore(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Duece</ThemedText>
-          <BoxInput
-            value={getTwoScore?.toString() || ""}
-            onChange={(value) => setTwoScore(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Three</ThemedText>
-          <BoxInput
-            value={getThreeScore?.toString() || ""}
-            onChange={(value) => setThreeScore(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Four</ThemedText>
-          <BoxInput
-            value={getFourScore?.toString() || ""}
-            onChange={(value) => setFourScore(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Five</ThemedText>
-          <BoxInput
-            value={getFiveScore?.toString() || ""}
-            onChange={(value) => setFiveScore(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Six</ThemedText>
-          <BoxInput
-            value={getSixScore?.toString() || ""}
-            onChange={(value) => setSixScore(value ? parseInt(value) : null)}
-          />
-        </View>
-        <ThemedText type="heading" align="center">
-          Bottom
+    <ScrollView>
+      <ThemedView style={styles.root}>
+        <ThemedText type="label" align="center">
+          Top
         </ThemedText>
-        <View style={styles.row}>
-          <ThemedText>3 of a Kind</ThemedText>
-          <BoxInput
-            value={getThreeOfKind?.toString() || ""}
-            onChange={(value) => setThreeOfKind(value ? parseInt(value) : null)}
-          />
+        <View style={styles.table}>
+          <View style={styles.row}>
+            <ThemedText>Ace</ThemedText>
+            <BoxInput
+              size={boxSize}
+              value={getScoreCard.score.ace?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    ace: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Duece</ThemedText>
+            <BoxInput
+              size={boxSize}
+              value={getScoreCard.score.two?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    two: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Three</ThemedText>
+            <BoxInput
+              size={boxSize}
+              value={getScoreCard.score.three?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    three: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Four</ThemedText>
+            <BoxInput
+              size={boxSize}
+              value={getScoreCard.score.four?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    four: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Five</ThemedText>
+            <BoxInput
+              size={boxSize}
+              value={getScoreCard.score.five?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    five: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Six</ThemedText>
+            <BoxInput
+              size={boxSize}
+              value={getScoreCard.score.six?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    six: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+            />
+          </View>
+          <ThemedText type="label" align="center">
+            Bottom
+          </ThemedText>
+          <View style={styles.row}>
+            <ThemedText>3 of a Kind</ThemedText>
+            <BoxInput
+              size={boxSize}
+              value={getScoreCard.score.threeOfKind?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    threeOfKind: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>4 of a Kind</ThemedText>
+            <BoxInput
+              size={boxSize}
+              value={getScoreCard.score.fourOfKind?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    fourOfKind: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Full House</ThemedText>
+            <Checkbox
+              size={boxSize}
+              checked={getScoreCard.score.fullHouse || false}
+              onChange={(checked) =>
+                setScoreCard(getScoreCard.copy({ fullHouse: checked }))
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Sm. Straight</ThemedText>
+            <Checkbox
+              size={boxSize}
+              checked={getScoreCard.score.smallStraight || false}
+              onChange={(checked) =>
+                setScoreCard(getScoreCard.copy({ smallStraight: checked }))
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Lg. Straight</ThemedText>
+            <Checkbox
+              size={boxSize}
+              checked={getScoreCard.score.largeStraight || false}
+              onChange={(checked) =>
+                setScoreCard(getScoreCard.copy({ largeStraight: checked }))
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Yahtzee</ThemedText>
+            <Checkbox
+              size={boxSize}
+              checked={getScoreCard.score.yahtzee || false}
+              onChange={(checked) =>
+                setScoreCard(getScoreCard.copy({ yahtzee: checked }))
+              }
+            />
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Bonus</ThemedText>
+            <View style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+              <Checkbox
+                size={boxSize}
+                checked={
+                  getScoreCard.score.bonus != null &&
+                  getScoreCard.score.bonus > 0
+                }
+                onChange={(checked) =>
+                  setScoreCard(
+                    getScoreCard.copy({
+                      bonus:
+                        (getScoreCard.score.bonus || 0) + (checked ? 1 : -1),
+                    }),
+                  )
+                }
+              />
+              <Checkbox
+                size={boxSize}
+                checked={
+                  getScoreCard.score.bonus != null &&
+                  getScoreCard.score.bonus > 1
+                }
+                onChange={(checked) =>
+                  setScoreCard(
+                    getScoreCard.copy({
+                      bonus:
+                        (getScoreCard.score.bonus || 0) + (checked ? 1 : -1),
+                    }),
+                  )
+                }
+              />
+              <Checkbox
+                size={boxSize}
+                checked={
+                  getScoreCard.score.bonus != null &&
+                  getScoreCard.score.bonus > 2
+                }
+                onChange={(checked) =>
+                  setScoreCard(
+                    getScoreCard.copy({
+                      bonus:
+                        (getScoreCard.score.bonus || 0) + (checked ? 1 : -1),
+                    }),
+                  )
+                }
+              />
+            </View>
+          </View>
+          <View style={styles.row}>
+            <ThemedText>Chance</ThemedText>
+            <BoxInput
+              value={getScoreCard.score.chance?.toString() || ""}
+              onChange={(value) =>
+                setScoreCard(
+                  getScoreCard.copy({
+                    chance: value ? parseInt(value) : null,
+                  }),
+                )
+              }
+              size={boxSize}
+            />
+          </View>
+          <ThemedText align="center">{`Total Score: ${getScoreCard.calculateTotalScore() > 0 ? getScoreCard.calculateTotalScore() : "--"}`}</ThemedText>
         </View>
-        <View style={styles.row}>
-          <ThemedText>4 of a Kind</ThemedText>
-          <BoxInput
-            value={getFourOfKind?.toString() || ""}
-            onChange={(value) => setFourOfKind(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Full House</ThemedText>
-          <BoxInput
-            value={getFullHouse?.toString() || ""}
-            onChange={(value) => setFullHouse(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Sm. Straight</ThemedText>
-          <BoxInput
-            value={getSmallStraight?.toString() || ""}
-            onChange={(value) =>
-              setSmallStraight(value ? parseInt(value) : null)
-            }
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Yahtzee</ThemedText>
-          <BoxInput
-            value={getYahtzee?.toString() || ""}
-            onChange={(value) => setYahtzee(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Bonus</ThemedText>
-          <BoxInput
-            value={getBonus?.toString() || ""}
-            onChange={(value) => setBonus(value ? parseInt(value) : null)}
-          />
-        </View>
-        <View style={styles.row}>
-          <ThemedText>Chance</ThemedText>
-          <BoxInput
-            value={getChance?.toString() || ""}
-            onChange={(value) => setChance(value ? parseInt(value) : null)}
-          />
-        </View>
-        <ThemedText align="center">Total Score: --</ThemedText>
-      </View>
-    </ThemedView>
+      </ThemedView>
+    </ScrollView>
   );
 }
 

@@ -1,8 +1,11 @@
+import Checkbox from "@/components/checkbox";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import React from "react";
 import { StyleSheet } from "react-native";
 
 export default function TypographyPage() {
+  const [getChecked, setChecked] = React.useState(false);
   return (
     <ThemedView style={styles.background}>
       <ThemedText type="headline">Headline</ThemedText>
@@ -13,6 +16,7 @@ export default function TypographyPage() {
       <ThemedText type="normal">Normal</ThemedText>
       <ThemedText type="button">Button</ThemedText>
       <ThemedText type="subtext">Subtext</ThemedText>
+      <Checkbox checked={getChecked} onChange={setChecked} size={36} />
     </ThemedView>
   );
 }
