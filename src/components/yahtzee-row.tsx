@@ -1,5 +1,5 @@
 import MaterialIcons from "@react-native-vector-icons/material-icons";
-import { useRef } from "react";
+import { PropsWithChildren, useRef } from "react";
 import { StyleSheet, View } from "react-native";
 import ReanimatedSwipeable, {
   SwipeableMethods,
@@ -8,53 +8,45 @@ import Reanimated, {
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import BoxInput from "./box-input";
-import { ThemedText } from "./themed-text";
 
-export type YahtzeeRowProps = {
-  label: string;
-  value: number | null;
-  onChange: (value: number | null) => void;
-  boxSize?: number;
+export interface YahtzeeRowProps {
   width?: number;
   onSwipe?: () => void;
-};
+}
+
+function swipeAction(
+  prog: SharedValue<number>,
+  drag: SharedValue<number>,
+  width: number,
+) {
+  const styleAnimation = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: drag.value - width }],
+    };
+  });
+  return (
+    <Reanimated.View
+      style={[
+        styleAnimation,
+        {
+          width: "100%",
+          padding: 8,
+          backgroundColor: "red",
+          justifyContent: "center",
+          alignItems: "flex-end",
+        },
+      ]}
+    >
+      <MaterialIcons name="delete" color="white" size={16} />
+    </Reanimated.View>
+  );
+}
 
 export default function YahtzeeRow({
-  label,
-  value,
-  onChange,
-  boxSize,
   width = 250,
   onSwipe,
-}: YahtzeeRowProps) {
-  const swipeAction = (
-    prog: SharedValue<number>,
-    drag: SharedValue<number>,
-  ) => {
-    const styleAnimation = useAnimatedStyle(() => {
-      return {
-        transform: [{ translateX: drag.value - width }],
-      };
-    });
-    return (
-      <Reanimated.View
-        style={[
-          styleAnimation,
-          {
-            width: "100%",
-            padding: 8,
-            backgroundColor: "red",
-            justifyContent: "center",
-            alignItems: "flex-end",
-          },
-        ]}
-      >
-        <MaterialIcons name="delete" color="white" size={16} />
-      </Reanimated.View>
-    );
-  };
-
+  children,
+}: PropsWithChildren<YahtzeeRowProps>) {
   const swipeableRef = useRef<SwipeableMethods>(null);
 
   return (
@@ -62,29 +54,20 @@ export default function YahtzeeRow({
       ref={swipeableRef}
       friction={2}
       leftThreshold={75}
-      renderLeftActions={swipeAction}
+      renderLeftActions={(prog, drag, _) => {
+        return swipeAction(prog, drag, width);
+      }}
       onSwipeableOpen={() => {
         onSwipe?.();
         swipeableRef.current?.close();
       }}
     >
-      <View style={[styles.row, { width: width }]}>
-        <ThemedText style={value === 0 ? styles.crossed : undefined}>
-          {label}
-        </ThemedText>
-        <BoxInput
-          size={boxSize}
-          value={value?.toString() || ""}
-          onChange={(value: string | null) =>
-            onChange(value ? parseInt(value) || null : null)
-          }
-        />
-      </View>
+      <View style={[yahtzeeRowStyles.row, { width: width }]}>{children}</View>
     </ReanimatedSwipeable>
   );
 }
 
-const styles = StyleSheet.create({
+export const yahtzeeRowStyles = StyleSheet.create({
   row: {
     display: "flex",
     flexDirection: "row",
@@ -93,9 +76,7 @@ const styles = StyleSheet.create({
     gap: 24,
     paddingLeft: 8,
   },
-  crossed: {
-    textDecorationLine: "line-through",
-  },
+
   action: {
     color: "white",
   },

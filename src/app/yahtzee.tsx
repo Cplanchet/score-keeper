@@ -1,7 +1,8 @@
-import Checkbox from "@/components/checkbox";
+import BonusYahtzeeRow from "@/components/bonus-yahtzee-row";
+import BooleanYahtzeeRow from "@/components/boolean-yahtzee-row";
+import InputYahtzeeRow from "@/components/input-yahtzee-row";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import YahtzeeRow from "@/components/yahtzee-row";
 import YahtzeeScoreCard from "@/models/yahtzee-score";
 
 import { useState } from "react";
@@ -25,7 +26,7 @@ export default function Yahtzee() {
           Top
         </ThemedText>
         <View style={styles.table}>
-          <YahtzeeRow
+          <InputYahtzeeRow
             label="Ace"
             value={getScoreCard.score.ace}
             onChange={(value) =>
@@ -35,7 +36,7 @@ export default function Yahtzee() {
             boxSize={boxSize}
             width={rowWidth}
           />
-          <YahtzeeRow
+          <InputYahtzeeRow
             label="Duece"
             value={getScoreCard.score.two}
             onChange={(value) =>
@@ -45,7 +46,7 @@ export default function Yahtzee() {
             boxSize={boxSize}
             width={rowWidth}
           />
-          <YahtzeeRow
+          <InputYahtzeeRow
             label="Three"
             value={getScoreCard.score.three}
             onChange={(value) =>
@@ -55,7 +56,7 @@ export default function Yahtzee() {
             boxSize={boxSize}
             width={rowWidth}
           />
-          <YahtzeeRow
+          <InputYahtzeeRow
             label="Four"
             value={getScoreCard.score.four}
             onChange={(value) =>
@@ -65,7 +66,7 @@ export default function Yahtzee() {
             boxSize={boxSize}
             width={rowWidth}
           />
-          <YahtzeeRow
+          <InputYahtzeeRow
             label="Five"
             value={getScoreCard.score.five}
             onChange={(value) =>
@@ -75,7 +76,7 @@ export default function Yahtzee() {
             boxSize={boxSize}
             width={rowWidth}
           />
-          <YahtzeeRow
+          <InputYahtzeeRow
             label="Six"
             value={getScoreCard.score.six}
             onChange={(value) =>
@@ -88,7 +89,7 @@ export default function Yahtzee() {
           <ThemedText type="label" align="center">
             Bottom
           </ThemedText>
-          <YahtzeeRow
+          <InputYahtzeeRow
             label="3 of a Kind"
             value={getScoreCard.score.threeOfKind}
             onChange={(value) =>
@@ -98,7 +99,7 @@ export default function Yahtzee() {
             boxSize={boxSize}
             width={rowWidth}
           />
-          <YahtzeeRow
+          <InputYahtzeeRow
             label="4 of a Kind"
             value={getScoreCard.score.fourOfKind}
             onChange={(value) =>
@@ -108,130 +109,64 @@ export default function Yahtzee() {
             boxSize={boxSize}
             width={rowWidth}
           />
-          <View style={styles.row}>
-            <ThemedText
-              style={
-                getScoreCard.score.fullHouse === false
-                  ? styles.crossed
-                  : undefined
-              }
-            >
-              Full House
-            </ThemedText>
-            <Checkbox
-              size={boxSize}
-              checked={getScoreCard.score.fullHouse || false}
-              onChange={(checked) =>
-                setScoreCard(getScoreCard.copy({ fullHouse: checked }))
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText
-              style={
-                getScoreCard.score.smallStraight === false
-                  ? styles.crossed
-                  : undefined
-              }
-            >
-              Sm. Straight
-            </ThemedText>
-            <Checkbox
-              size={boxSize}
-              checked={getScoreCard.score.smallStraight || false}
-              onChange={(checked) =>
-                setScoreCard(getScoreCard.copy({ smallStraight: checked }))
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText
-              style={
-                getScoreCard.score.largeStraight === false
-                  ? styles.crossed
-                  : undefined
-              }
-            >
-              Lg. Straight
-            </ThemedText>
-            <Checkbox
-              size={boxSize}
-              checked={getScoreCard.score.largeStraight || false}
-              onChange={(checked) =>
-                setScoreCard(getScoreCard.copy({ largeStraight: checked }))
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText
-              style={
-                getScoreCard.score.yahtzee === false
-                  ? styles.crossed
-                  : undefined
-              }
-            >
-              Yahtzee
-            </ThemedText>
-            <Checkbox
-              size={boxSize}
-              checked={getScoreCard.score.yahtzee || false}
-              onChange={(checked) =>
-                setScoreCard(getScoreCard.copy({ yahtzee: checked }))
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText>Bonus</ThemedText>
-            {/*TODO: implement logic to disable these when no yahtzee is scored*/}
-            <View style={{ display: "flex", flexDirection: "row", gap: 8 }}>
-              <Checkbox
-                size={boxSize}
-                checked={
-                  getScoreCard.score.bonus != null &&
-                  getScoreCard.score.bonus > 0
-                }
-                onChange={(checked) =>
-                  setScoreCard(
-                    getScoreCard.copy({
-                      bonus:
-                        (getScoreCard.score.bonus || 0) + (checked ? 1 : -1),
-                    }),
-                  )
-                }
-              />
-              <Checkbox
-                size={boxSize}
-                checked={
-                  getScoreCard.score.bonus != null &&
-                  getScoreCard.score.bonus > 1
-                }
-                onChange={(checked) =>
-                  setScoreCard(
-                    getScoreCard.copy({
-                      bonus:
-                        (getScoreCard.score.bonus || 0) + (checked ? 1 : -1),
-                    }),
-                  )
-                }
-              />
-              <Checkbox
-                size={boxSize}
-                checked={
-                  getScoreCard.score.bonus != null &&
-                  getScoreCard.score.bonus > 2
-                }
-                onChange={(checked) =>
-                  setScoreCard(
-                    getScoreCard.copy({
-                      bonus:
-                        (getScoreCard.score.bonus || 0) + (checked ? 1 : -1),
-                    }),
-                  )
-                }
-              />
-            </View>
-          </View>
-          <YahtzeeRow
+          <BooleanYahtzeeRow
+            label="Full House"
+            value={getScoreCard.score.fullHouse}
+            onCheck={(value) =>
+              setScoreCard(getScoreCard.copy({ fullHouse: value }))
+            }
+            onSwipe={() =>
+              setScoreCard(getScoreCard.copy({ fullHouse: false }))
+            }
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <BooleanYahtzeeRow
+            label="Sm. Straight"
+            value={getScoreCard.score.smallStraight}
+            onCheck={(value) =>
+              setScoreCard(getScoreCard.copy({ smallStraight: value }))
+            }
+            onSwipe={() =>
+              setScoreCard(getScoreCard.copy({ smallStraight: false }))
+            }
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <BooleanYahtzeeRow
+            label="Lg. Straight"
+            value={getScoreCard.score.largeStraight}
+            onCheck={(value) =>
+              setScoreCard(getScoreCard.copy({ largeStraight: value }))
+            }
+            onSwipe={() =>
+              setScoreCard(getScoreCard.copy({ largeStraight: false }))
+            }
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <BooleanYahtzeeRow
+            label="Yahtzee"
+            value={getScoreCard.score.yahtzee}
+            onCheck={(value) =>
+              setScoreCard(getScoreCard.copy({ yahtzee: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ yahtzee: false }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <BonusYahtzeeRow
+            width={rowWidth}
+            boxSize={boxSize}
+            value={getScoreCard.score.bonus}
+            onChange={(value: boolean) => {
+              let currentValue = getScoreCard.score.bonus || 0;
+              setScoreCard(
+                getScoreCard.copy({ bonus: currentValue + (value ? 1 : -1) }),
+              );
+            }}
+          />
+          <InputYahtzeeRow
             label="Chance"
             value={getScoreCard.score.chance}
             onChange={(value) =>
@@ -260,16 +195,5 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     gap: 8,
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 24,
-    paddingLeft: 8,
-  },
-  crossed: {
-    textDecorationLine: "line-through",
   },
 });
