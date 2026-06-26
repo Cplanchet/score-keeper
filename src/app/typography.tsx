@@ -1,9 +1,10 @@
+import Button from "@/components/button";
+import Checkbox from "@/components/checkbox";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useTheme } from "@/hooks/use-theme";
 import React, { useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
 import ReanimatedSwipeable, {
   SwipeableMethods,
 } from "react-native-gesture-handler/ReanimatedSwipeable";
@@ -42,7 +43,14 @@ export default function TypographyPage() {
   const theme = useTheme();
   const swipeableRef = useRef<SwipeableMethods>(null);
   return (
-    <GestureHandlerRootView>
+    <View
+      style={{
+        alignItems: "flex-start",
+        padding: 24,
+
+        height: "auto",
+      }}
+    >
       <ThemedView style={styles.background}>
         <ThemedText type="headline">Headline</ThemedText>
         <ThemedText type="title">Title</ThemedText>
@@ -70,15 +78,40 @@ export default function TypographyPage() {
             <Text style={{ color: "white" }}>Swipe</Text>
           </ReanimatedSwipeable>
         </View>
+        <Checkbox
+          checked={false}
+          onChange={() => {}}
+          disabled={true}
+        ></Checkbox>
       </ThemedView>
-    </GestureHandlerRootView>
+      <Button
+        label="Primary"
+        variant="primary"
+        onPress={() => {}}
+        iconBefore="refresh"
+        iconAfter="refresh"
+      />
+      <Button
+        label="Secondary"
+        variant="secondary"
+        onPress={() => {}}
+        iconBefore="refresh"
+        iconAfter="refresh"
+      />
+      <Button
+        label="Text"
+        variant="text"
+        onPress={() => {}}
+        iconBefore="refresh"
+        iconAfter="refresh"
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   background: {
     width: "100%",
-    height: "100%",
     padding: 24,
   },
   swipe: {

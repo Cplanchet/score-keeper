@@ -15,12 +15,14 @@ export type ThemedTextProps = TextProps & {
     | "button"
     | "subtext";
   align?: "left" | "center" | "right";
+  color?: "text" | "primary" | "disabled";
 };
 
 export function ThemedText({
   style,
   align,
   type = "normal",
+  color = "text",
   ...rest
 }: ThemedTextProps) {
   const theme = useTheme();
@@ -28,7 +30,7 @@ export function ThemedText({
   return (
     <Text
       style={[
-        { color: theme["text"] },
+        { color: theme[color] },
         Typography[type],
         align && { textAlign: align },
         style,

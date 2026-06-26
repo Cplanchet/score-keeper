@@ -1,8 +1,10 @@
 import BonusYahtzeeRow from "@/components/bonus-yahtzee-row";
 import BooleanYahtzeeRow from "@/components/boolean-yahtzee-row";
+import Button from "@/components/button";
 import InputYahtzeeRow from "@/components/input-yahtzee-row";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { useTheme } from "@/hooks/use-theme";
 import YahtzeeScoreCard from "@/models/yahtzee-score";
 
 import { useState } from "react";
@@ -13,6 +15,7 @@ export default function Yahtzee() {
     YahtzeeScoreCard.empty(),
   );
 
+  const theme = useTheme();
   const boxSize = 30;
   const rowWidth = 250;
 
@@ -159,6 +162,7 @@ export default function Yahtzee() {
             width={rowWidth}
             boxSize={boxSize}
             value={getScoreCard.score.bonus}
+            disabled={getScoreCard.score.yahtzee === false}
             onChange={(value: boolean) => {
               let currentValue = getScoreCard.score.bonus || 0;
               setScoreCard(
@@ -177,6 +181,14 @@ export default function Yahtzee() {
             width={rowWidth}
           />
           <ThemedText align="center">{`Total Score: ${getScoreCard.calculateTotalScore() > 0 ? getScoreCard.calculateTotalScore() : "--"}`}</ThemedText>
+        </View>
+        <View style={{ marginTop: 16 }}>
+          <Button
+            label="Refresh"
+            iconBefore="refresh"
+            variant="secondary"
+            onPress={() => setScoreCard(YahtzeeScoreCard.empty)}
+          />
         </View>
       </ThemedView>
     </ScrollView>

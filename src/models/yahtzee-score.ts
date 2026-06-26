@@ -51,7 +51,7 @@ export default class YahtzeeScoreCard {
       (this.score.smallStraight ? 30 : 0) +
       (this.score.largeStraight ? 40 : 0) +
       (this.score.yahtzee ? 50 : 0) +
-      (this.score.bonus ? this.score.bonus * 100 : 0) +
+      (this.score.yahtzee && this.score.bonus ? this.score.bonus * 100 : 0) +
       (this.score.chance || 0);
   }
 }
