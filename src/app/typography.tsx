@@ -1,23 +1,77 @@
-import Checkbox from "@/components/checkbox";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import React from "react";
-import { StyleSheet } from "react-native";
+import { useTheme } from "@/hooks/use-theme";
+import React, { useRef } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import ReanimatedSwipeable, {
+  SwipeableMethods,
+} from "react-native-gesture-handler/ReanimatedSwipeable";
+import Reanimated, {
+  SharedValue,
+  useAnimatedStyle,
+} from "react-native-reanimated";
+
+function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
+  const styleAnimation = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateX: drag.value + 300 }],
+    };
+  });
+
+  return (
+    <Reanimated.View
+      style={[
+        styleAnimation,
+        {
+          width: "100%",
+          padding: 16,
+          backgroundColor: "red",
+          justifyContent: "center",
+          alignItems: "flex-start",
+        },
+      ]}
+    >
+      <Text style={styles.action}>Text</Text>
+    </Reanimated.View>
+  );
+}
 
 export default function TypographyPage() {
   const [getChecked, setChecked] = React.useState(false);
+  const theme = useTheme();
+  const swipeableRef = useRef<SwipeableMethods>(null);
   return (
-    <ThemedView style={styles.background}>
-      <ThemedText type="headline">Headline</ThemedText>
-      <ThemedText type="title">Title</ThemedText>
-      <ThemedText type="heading">Heading</ThemedText>
-      <ThemedText type="label">Label</ThemedText>
-      <ThemedText type="link">Link</ThemedText>
-      <ThemedText type="normal">Normal</ThemedText>
-      <ThemedText type="button">Button</ThemedText>
-      <ThemedText type="subtext">Subtext</ThemedText>
-      <Checkbox checked={getChecked} onChange={setChecked} size={36} />
-    </ThemedView>
+    <GestureHandlerRootView>
+      <ThemedView style={styles.background}>
+        <ThemedText type="headline">Headline</ThemedText>
+        <ThemedText type="title">Title</ThemedText>
+        <ThemedText type="heading">Heading</ThemedText>
+        <ThemedText type="label">Label</ThemedText>
+        <ThemedText type="link">Link</ThemedText>
+        <ThemedText type="normal">Normal</ThemedText>
+        <ThemedText type="button">Button</ThemedText>
+        <ThemedText type="subtext">Subtext</ThemedText>
+
+        <View style={{ width: 300 }}>
+          <ReanimatedSwipeable
+            friction={2}
+            renderRightActions={RightAction}
+            containerStyle={[
+              styles.swipe,
+              { backgroundColor: theme.background },
+            ]}
+            ref={swipeableRef}
+            onSwipeableOpen={() => {
+              console.log("open");
+              swipeableRef.current?.close();
+            }}
+          >
+            <Text style={{ color: "white" }}>Swipe</Text>
+          </ReanimatedSwipeable>
+        </View>
+      </ThemedView>
+    </GestureHandlerRootView>
   );
 }
 
@@ -26,5 +80,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     padding: 24,
+  },
+  swipe: {
+    padding: 24,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  action: {
+    color: "white",
   },
 });

@@ -14,10 +14,10 @@ export default class YahtzeeScoreCard {
 
         threeOfKind: null,
         fourOfKind: null,
-        fullHouse: false,
-        smallStraight: false,
-        largeStraight: false,
-        yahtzee: false,
+        fullHouse: null,
+        smallStraight: null,
+        largeStraight: null,
+        yahtzee: null,
         bonus: null,
         chance: null,
       }
@@ -66,10 +66,10 @@ export type YahtzeeScore = {
 
   threeOfKind: number | null;
   fourOfKind: number | null;
-  fullHouse: boolean;
-  smallStraight: boolean;
-  largeStraight: boolean;
-  yahtzee: boolean;
+  fullHouse: boolean | null;
+  smallStraight: boolean | null;
+  largeStraight: boolean | null;
+  yahtzee: boolean | null;
   bonus: number | null;
   chance: number | null;
 }

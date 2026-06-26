@@ -1,7 +1,7 @@
-import BoxInput from "@/components/box-input";
 import Checkbox from "@/components/checkbox";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import YahtzeeRow from "@/components/yahtzee-row";
 import YahtzeeScoreCard from "@/models/yahtzee-score";
 
 import { useState } from "react";
@@ -13,131 +13,111 @@ export default function Yahtzee() {
   );
 
   const boxSize = 30;
+  const rowWidth = 250;
 
   return (
-    <ScrollView>
+    <ScrollView
+      style={{ width: "100%", height: "100%" }}
+      contentContainerStyle={{ flexGrow: 1 }}
+    >
       <ThemedView style={styles.root}>
         <ThemedText type="label" align="center">
           Top
         </ThemedText>
         <View style={styles.table}>
-          <View style={styles.row}>
-            <ThemedText>Ace</ThemedText>
-            <BoxInput
-              size={boxSize}
-              value={getScoreCard.score.ace?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    ace: value ? parseInt(value) : null,
-                  }),
-                )
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText>Duece</ThemedText>
-            <BoxInput
-              size={boxSize}
-              value={getScoreCard.score.two?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    two: value ? parseInt(value) : null,
-                  }),
-                )
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText>Three</ThemedText>
-            <BoxInput
-              size={boxSize}
-              value={getScoreCard.score.three?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    three: value ? parseInt(value) : null,
-                  }),
-                )
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText>Four</ThemedText>
-            <BoxInput
-              size={boxSize}
-              value={getScoreCard.score.four?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    four: value ? parseInt(value) : null,
-                  }),
-                )
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText>Five</ThemedText>
-            <BoxInput
-              size={boxSize}
-              value={getScoreCard.score.five?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    five: value ? parseInt(value) : null,
-                  }),
-                )
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText>Six</ThemedText>
-            <BoxInput
-              size={boxSize}
-              value={getScoreCard.score.six?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    six: value ? parseInt(value) : null,
-                  }),
-                )
-              }
-            />
-          </View>
+          <YahtzeeRow
+            label="Ace"
+            value={getScoreCard.score.ace}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ ace: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ ace: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <YahtzeeRow
+            label="Duece"
+            value={getScoreCard.score.two}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ two: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ two: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <YahtzeeRow
+            label="Three"
+            value={getScoreCard.score.three}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ three: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ three: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <YahtzeeRow
+            label="Four"
+            value={getScoreCard.score.four}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ four: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ four: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <YahtzeeRow
+            label="Five"
+            value={getScoreCard.score.five}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ five: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ five: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <YahtzeeRow
+            label="Six"
+            value={getScoreCard.score.six}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ six: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ six: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
           <ThemedText type="label" align="center">
             Bottom
           </ThemedText>
+          <YahtzeeRow
+            label="3 of a Kind"
+            value={getScoreCard.score.threeOfKind}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ threeOfKind: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ threeOfKind: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
+          <YahtzeeRow
+            label="4 of a Kind"
+            value={getScoreCard.score.fourOfKind}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ fourOfKind: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ fourOfKind: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
           <View style={styles.row}>
-            <ThemedText>3 of a Kind</ThemedText>
-            <BoxInput
-              size={boxSize}
-              value={getScoreCard.score.threeOfKind?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    threeOfKind: value ? parseInt(value) : null,
-                  }),
-                )
+            <ThemedText
+              style={
+                getScoreCard.score.fullHouse === false
+                  ? styles.crossed
+                  : undefined
               }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText>4 of a Kind</ThemedText>
-            <BoxInput
-              size={boxSize}
-              value={getScoreCard.score.fourOfKind?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    fourOfKind: value ? parseInt(value) : null,
-                  }),
-                )
-              }
-            />
-          </View>
-          <View style={styles.row}>
-            <ThemedText>Full House</ThemedText>
+            >
+              Full House
+            </ThemedText>
             <Checkbox
               size={boxSize}
               checked={getScoreCard.score.fullHouse || false}
@@ -147,7 +127,15 @@ export default function Yahtzee() {
             />
           </View>
           <View style={styles.row}>
-            <ThemedText>Sm. Straight</ThemedText>
+            <ThemedText
+              style={
+                getScoreCard.score.smallStraight === false
+                  ? styles.crossed
+                  : undefined
+              }
+            >
+              Sm. Straight
+            </ThemedText>
             <Checkbox
               size={boxSize}
               checked={getScoreCard.score.smallStraight || false}
@@ -157,7 +145,15 @@ export default function Yahtzee() {
             />
           </View>
           <View style={styles.row}>
-            <ThemedText>Lg. Straight</ThemedText>
+            <ThemedText
+              style={
+                getScoreCard.score.largeStraight === false
+                  ? styles.crossed
+                  : undefined
+              }
+            >
+              Lg. Straight
+            </ThemedText>
             <Checkbox
               size={boxSize}
               checked={getScoreCard.score.largeStraight || false}
@@ -167,7 +163,15 @@ export default function Yahtzee() {
             />
           </View>
           <View style={styles.row}>
-            <ThemedText>Yahtzee</ThemedText>
+            <ThemedText
+              style={
+                getScoreCard.score.yahtzee === false
+                  ? styles.crossed
+                  : undefined
+              }
+            >
+              Yahtzee
+            </ThemedText>
             <Checkbox
               size={boxSize}
               checked={getScoreCard.score.yahtzee || false}
@@ -178,6 +182,7 @@ export default function Yahtzee() {
           </View>
           <View style={styles.row}>
             <ThemedText>Bonus</ThemedText>
+            {/*TODO: implement logic to disable these when no yahtzee is scored*/}
             <View style={{ display: "flex", flexDirection: "row", gap: 8 }}>
               <Checkbox
                 size={boxSize}
@@ -226,20 +231,16 @@ export default function Yahtzee() {
               />
             </View>
           </View>
-          <View style={styles.row}>
-            <ThemedText>Chance</ThemedText>
-            <BoxInput
-              value={getScoreCard.score.chance?.toString() || ""}
-              onChange={(value) =>
-                setScoreCard(
-                  getScoreCard.copy({
-                    chance: value ? parseInt(value) : null,
-                  }),
-                )
-              }
-              size={boxSize}
-            />
-          </View>
+          <YahtzeeRow
+            label="Chance"
+            value={getScoreCard.score.chance}
+            onChange={(value) =>
+              setScoreCard(getScoreCard.copy({ chance: value }))
+            }
+            onSwipe={() => setScoreCard(getScoreCard.copy({ chance: 0 }))}
+            boxSize={boxSize}
+            width={rowWidth}
+          />
           <ThemedText align="center">{`Total Score: ${getScoreCard.calculateTotalScore() > 0 ? getScoreCard.calculateTotalScore() : "--"}`}</ThemedText>
         </View>
       </ThemedView>
@@ -266,5 +267,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     gap: 24,
+    paddingLeft: 8,
+  },
+  crossed: {
+    textDecorationLine: "line-through",
   },
 });
