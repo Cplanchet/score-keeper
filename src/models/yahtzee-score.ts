@@ -18,7 +18,7 @@ export default class YahtzeeScoreCard {
         smallStraight: null,
         largeStraight: null,
         yahtzee: null,
-        bonus: null,
+        bonus: 0,
         chance: null,
       }
     );
@@ -34,13 +34,7 @@ export default class YahtzeeScoreCard {
   }
 
   calculateTotalScore(): number {
-    const topScore =
-      (this.score.ace || 0) +
-      (this.score.two || 0) +
-      (this.score.three || 0) +
-      (this.score.four || 0) +
-      (this.score.five || 0) +
-      (this.score.six || 0);
+    const topScore = this.calculateTopScore()
 
 
     return (topScore >= 63 ? 35 : 0) +
@@ -53,6 +47,19 @@ export default class YahtzeeScoreCard {
       (this.score.yahtzee ? 50 : 0) +
       (this.score.yahtzee && this.score.bonus ? this.score.bonus * 100 : 0) +
       (this.score.chance || 0);
+  }
+
+  calculateTopScore(): number {
+    return (this.score.ace || 0) +
+      (this.score.two || 0) +
+      (this.score.three || 0) +
+      (this.score.four || 0) +
+      (this.score.five || 0) +
+      (this.score.six || 0);
+  }
+
+  isFilled(): boolean {
+    return !Object.values(this.score).some((value) => value === null)
   }
 }
 
@@ -70,6 +77,6 @@ export type YahtzeeScore = {
   smallStraight: boolean | null;
   largeStraight: boolean | null;
   yahtzee: boolean | null;
-  bonus: number | null;
+  bonus: number;
   chance: number | null;
 }
