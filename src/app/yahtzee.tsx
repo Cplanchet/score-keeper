@@ -15,10 +15,16 @@ export default function Yahtzee() {
   const [getScoreCard, setScoreCard] = useState<YahtzeeScoreCard>(
     YahtzeeScoreCard.empty(),
   );
+  const [getEditMode, setEditMode] = useState(false);
 
   const theme = useTheme();
   const boxSize = 30;
   const rowWidth = 250;
+
+  const resetPage = () => {
+    setScoreCard(YahtzeeScoreCard.empty);
+    setEditMode(false);
+  };
 
   return (
     <ScrollView
@@ -26,7 +32,7 @@ export default function Yahtzee() {
       contentContainerStyle={{ flexGrow: 1 }}
     >
       <ThemedView style={styles.root}>
-        {getScoreCard.isFilled() ? (
+        {getScoreCard.isFilled() && !getEditMode ? (
           <View style={styles.table}>
             <ThemedText type="label" align="center">
               Top
@@ -80,6 +86,18 @@ export default function Yahtzee() {
               value={getScoreCard.score.chance!}
             />
             <ThemedText align="center">{`Total Score: ${getScoreCard.calculateTotalScore() > 0 ? getScoreCard.calculateTotalScore() : "0"}`}</ThemedText>
+            <View style={styles.buttonRow}>
+              <Button
+                label="New Game"
+                variant="primary"
+                onPress={() => resetPage()}
+              />
+              <Button
+                label="Edit Score"
+                variant="secondary"
+                onPress={() => setEditMode(true)}
+              />
+            </View>
           </View>
         ) : (
           <>
@@ -248,12 +266,12 @@ export default function Yahtzee() {
               />
               <ThemedText align="center">{`Total Score: ${getScoreCard.calculateTotalScore() > 0 ? getScoreCard.calculateTotalScore() : "--"}`}</ThemedText>
             </View>
-            <View style={{ marginTop: 16 }}>
+            <View style={styles.buttonRow}>
               <Button
-                label="Refresh"
-                iconBefore="refresh"
-                variant="secondary"
-                onPress={() => setScoreCard(YahtzeeScoreCard.empty)}
+                label={getEditMode ? "New Game" : "Reset"}
+                iconBefore={getEditMode ? undefined : "refresh"}
+                variant={getEditMode ? "primary" : "secondary"}
+                onPress={() => resetPage()}
               />
             </View>
           </>
@@ -275,5 +293,12 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     gap: 8,
+  },
+  buttonRow: {
+    marginTop: 16,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-evenly",
   },
 });
