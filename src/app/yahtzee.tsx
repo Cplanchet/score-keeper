@@ -46,6 +46,10 @@ export default function Yahtzee() {
             <DisplayYahtzeeRow label="Four" value={getScoreCard.score.four!} />
             <DisplayYahtzeeRow label="Five" value={getScoreCard.score.five!} />
             <DisplayYahtzeeRow label="Six" value={getScoreCard.score.six!} />
+            <DisplayYahtzeeRow
+              label="Bonus"
+              value={getScoreCard.calculateTopScore() >= 63 ? 35 : 0}
+            />
             <ThemedText type="label" align="center">
               Bottom
             </ThemedText>
@@ -165,6 +169,15 @@ export default function Yahtzee() {
                 boxSize={boxSize}
                 width={rowWidth}
               />
+              <ThemedText align="center">
+                {getScoreCard.isTopFilled()
+                  ? getScoreCard.calculateTopScore() >= 63
+                    ? "Bonus Scored!"
+                    : "Bonus Missed!"
+                  : getScoreCard.calculateTopScore() < 63
+                    ? `Points Needed for Bonus: ${63 - getScoreCard.calculateTopScore()}`
+                    : "Bonus Scored!"}
+              </ThemedText>
               <ThemedText type="label" align="center">
                 Bottom
               </ThemedText>

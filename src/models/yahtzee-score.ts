@@ -24,7 +24,7 @@ export default class YahtzeeScoreCard {
     );
   }
 
-  copy(scoreCard: Partial<YahtzeeScore>): YahtzeeScoreCard {
+  public copy(scoreCard: Partial<YahtzeeScore>): YahtzeeScoreCard {
     return new YahtzeeScoreCard(
       {
         ...this.score,
@@ -33,7 +33,7 @@ export default class YahtzeeScoreCard {
     );
   }
 
-  calculateTotalScore(): number {
+  public calculateTotalScore(): number {
     const topScore = this.calculateTopScore()
 
 
@@ -49,7 +49,7 @@ export default class YahtzeeScoreCard {
       (this.score.chance || 0);
   }
 
-  calculateTopScore(): number {
+  public calculateTopScore(): number {
     return (this.score.ace || 0) +
       (this.score.two || 0) +
       (this.score.three || 0) +
@@ -58,8 +58,11 @@ export default class YahtzeeScoreCard {
       (this.score.six || 0);
   }
 
-  isFilled(): boolean {
+  public isFilled(): boolean {
     return !Object.values(this.score).some((value) => value === null)
+  }
+  public isTopFilled(): boolean {
+    return ![this.score.ace, this.score.two, this.score.three, this.score.four, this.score.five, this.score.six].some((value) => value === null)
   }
 }
 
