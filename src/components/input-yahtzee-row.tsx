@@ -7,6 +7,8 @@ export interface InputYahtzeeRowProps extends YahtzeeRowProps {
   label: string;
   value: number | null;
   onChange: (value: number | null) => void;
+  onBlur?: () => void;
+  onFocus?: () => void;
   boxSize?: number;
 }
 
@@ -16,6 +18,8 @@ export default function InputYahtzeeRow({
   width,
   onSwipe,
   onChange,
+  onBlur,
+  onFocus,
   boxSize,
 }: InputYahtzeeRowProps) {
   return (
@@ -29,6 +33,8 @@ export default function InputYahtzeeRow({
         onChange={(value: string | null) =>
           onChange(value ? parseInt(value) || null : null)
         }
+        onBlur={onBlur}
+        onFocus={onFocus}
       />
     </YahtzeeRow>
   );

@@ -16,6 +16,7 @@ export default function Yahtzee() {
     YahtzeeScoreCard.empty(),
   );
   const [getEditMode, setEditMode] = useState(false);
+  const [getIsFocused, setIsFocused] = useState(false);
 
   const theme = useTheme();
   const boxSize = 30;
@@ -32,7 +33,7 @@ export default function Yahtzee() {
       contentContainerStyle={{ flexGrow: 1 }}
     >
       <ThemedView style={styles.root}>
-        {getScoreCard.isFilled() && !getEditMode ? (
+        {getScoreCard.isFilled() && !getIsFocused && !getEditMode ? (
           <View style={styles.table}>
             <ThemedText type="label" align="center">
               Top
@@ -116,6 +117,8 @@ export default function Yahtzee() {
                   setScoreCard(getScoreCard.copy({ ace: value }))
                 }
                 onSwipe={() => setScoreCard(getScoreCard.copy({ ace: 0 }))}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
                 boxSize={boxSize}
                 width={rowWidth}
               />
@@ -126,6 +129,8 @@ export default function Yahtzee() {
                   setScoreCard(getScoreCard.copy({ two: value }))
                 }
                 onSwipe={() => setScoreCard(getScoreCard.copy({ two: 0 }))}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
                 boxSize={boxSize}
                 width={rowWidth}
               />
@@ -138,6 +143,8 @@ export default function Yahtzee() {
                 onSwipe={() => setScoreCard(getScoreCard.copy({ three: 0 }))}
                 boxSize={boxSize}
                 width={rowWidth}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
               />
               <InputYahtzeeRow
                 label="Four"
@@ -148,6 +155,8 @@ export default function Yahtzee() {
                 onSwipe={() => setScoreCard(getScoreCard.copy({ four: 0 }))}
                 boxSize={boxSize}
                 width={rowWidth}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
               />
               <InputYahtzeeRow
                 label="Five"
@@ -158,6 +167,8 @@ export default function Yahtzee() {
                 onSwipe={() => setScoreCard(getScoreCard.copy({ five: 0 }))}
                 boxSize={boxSize}
                 width={rowWidth}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
               />
               <InputYahtzeeRow
                 label="Six"
@@ -168,6 +179,8 @@ export default function Yahtzee() {
                 onSwipe={() => setScoreCard(getScoreCard.copy({ six: 0 }))}
                 boxSize={boxSize}
                 width={rowWidth}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
               />
               <ThemedText align="center">
                 {getScoreCard.isTopFilled()
@@ -192,6 +205,8 @@ export default function Yahtzee() {
                 }
                 boxSize={boxSize}
                 width={rowWidth}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
               />
               <InputYahtzeeRow
                 label="4 of a Kind"
@@ -204,6 +219,8 @@ export default function Yahtzee() {
                 }
                 boxSize={boxSize}
                 width={rowWidth}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
               />
               <BooleanYahtzeeRow
                 label="Full House"
@@ -276,6 +293,8 @@ export default function Yahtzee() {
                 onSwipe={() => setScoreCard(getScoreCard.copy({ chance: 0 }))}
                 boxSize={boxSize}
                 width={rowWidth}
+                onBlur={() => setIsFocused(false)}
+                onFocus={() => setIsFocused(true)}
               />
               <ThemedText align="center">{`Total Score: ${getScoreCard.calculateTotalScore() > 0 ? getScoreCard.calculateTotalScore() : "--"}`}</ThemedText>
             </View>

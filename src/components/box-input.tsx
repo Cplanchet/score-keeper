@@ -5,6 +5,7 @@ export type BoxInputProps = {
   value: string;
   onChange: (value: string) => void;
   onBlur?: () => void;
+  onFocus?: () => void;
   size?: number;
 };
 
@@ -12,6 +13,7 @@ export default function BoxInput({
   value,
   onChange,
   onBlur,
+  onFocus,
   size = 30,
 }: BoxInputProps) {
   const theme = useTheme();
@@ -34,6 +36,7 @@ export default function BoxInput({
       value={value}
       onChangeText={onChange}
       onBlur={onBlur}
+      onFocus={onFocus}
       keyboardType="numeric"
     />
   );
