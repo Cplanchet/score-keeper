@@ -24,7 +24,8 @@ export const GlobalColors = {
   primaryDarkest: "#683d41",
   onPrimary: "#ffffff",
   secondary: "#26547c",
-  tertiary: "#92b6b1"
+  tertiary: "#92b6b1",
+  error: "#ff0000"
 } as const
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
@@ -69,7 +70,7 @@ export const Typography = {
     fontWeight: 300,
   },
   subtext: {
-    fontSize: 10,
+    fontSize: 12,
     fontWeight: 200,
   },
 } as const

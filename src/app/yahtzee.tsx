@@ -6,7 +6,9 @@ import InputYahtzeeRow from "@/components/input-yahtzee-row";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useTheme } from "@/hooks/use-theme";
+import { ValidateDivisibleBy, ValidateLessThan, ValidateZeroOrBetween } from "@/models/validation-tules";
 import YahtzeeScoreCard from "@/models/yahtzee-score";
+import { useRouter } from "expo-router";
 
 import { useState } from "react";
 import { ScrollView, StyleSheet, View } from "react-native";
@@ -17,17 +19,25 @@ export default function Yahtzee() {
   );
   const [getEditMode, setEditMode] = useState(false);
   const [getIsFocused, setIsFocused] = useState(false);
+  const [show, setShow] = useState(true)
+
 
   const theme = useTheme();
   const boxSize = 30;
   const rowWidth = 250;
 
+  const router = useRouter();
+
   const resetPage = () => {
+    setShow(false)
     setScoreCard(YahtzeeScoreCard.empty);
     setEditMode(false);
+    setTimeout(() => {
+      setShow(true)
+    }, 100)
   };
 
-  return (
+  return show ? (
     <ScrollView
       style={{ width: "100%", height: "100%" }}
       contentContainerStyle={{ flexGrow: 1 }}
@@ -121,6 +131,7 @@ export default function Yahtzee() {
                 onFocus={() => setIsFocused(true)}
                 boxSize={boxSize}
                 width={rowWidth}
+                validationRules={[new ValidateLessThan(7)]}
               />
               <InputYahtzeeRow
                 label="Deuce"
@@ -133,6 +144,7 @@ export default function Yahtzee() {
                 onFocus={() => setIsFocused(true)}
                 boxSize={boxSize}
                 width={rowWidth}
+                validationRules={[new ValidateLessThan(11), new ValidateDivisibleBy(2)]}
               />
               <InputYahtzeeRow
                 label="Three"
@@ -145,6 +157,7 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
+                validationRules={[new ValidateLessThan(16), new ValidateDivisibleBy(3)]}
               />
               <InputYahtzeeRow
                 label="Four"
@@ -157,6 +170,7 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
+                validationRules={[new ValidateLessThan(21), new ValidateDivisibleBy(4)]}
               />
               <InputYahtzeeRow
                 label="Five"
@@ -169,6 +183,7 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
+                validationRules={[new ValidateLessThan(26), new ValidateDivisibleBy(5)]}
               />
               <InputYahtzeeRow
                 label="Six"
@@ -181,6 +196,8 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
+                validationRules={[new ValidateLessThan(31), new ValidateDivisibleBy(6)]}
+
               />
               <ThemedText align="center">
                 {getScoreCard.isTopFilled()
@@ -207,6 +224,8 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
+                validationRules={[new ValidateZeroOrBetween(5, 30)]}
+
               />
               <InputYahtzeeRow
                 label="4 of a Kind"
@@ -221,6 +240,7 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
+                validationRules={[new ValidateZeroOrBetween(5, 30)]}
               />
               <BooleanYahtzeeRow
                 label="Full House"
@@ -295,6 +315,7 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
+                validationRules={[new ValidateZeroOrBetween(5, 30)]}
               />
               <ThemedText align="center">{`Total Score: ${getScoreCard.calculateTotalScore() > 0 ? getScoreCard.calculateTotalScore() : "--"}`}</ThemedText>
             </View>
@@ -310,7 +331,7 @@ export default function Yahtzee() {
         )}
       </ThemedView>
     </ScrollView>
-  );
+  ) : undefined;
 }
 
 const styles = StyleSheet.create({
