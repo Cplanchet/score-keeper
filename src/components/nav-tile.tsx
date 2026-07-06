@@ -6,7 +6,7 @@ import { StyleSheet, Text, TouchableHighlight, View } from "react-native";
 export type NavTileProps = {
   label: string;
   variant?: "primary" | "secondary";
-  url: "/yahtzee" | "/typography" | "/";
+  url: "/yahtzee" | "/typography" | "/general" | "/";
 };
 
 export function NavTile({ label, variant, url }: NavTileProps) {
