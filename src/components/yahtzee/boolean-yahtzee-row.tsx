@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import Checkbox from "./checkbox";
-import { ThemedText } from "./themed-text";
+import Checkbox from "../common/checkbox";
+import { ThemedText } from "../common/themed-text";
 import YahtzeeRow, { YahtzeeRowProps } from "./yahtzee-row";
 
 export interface BooleanYahtzeeRowProps extends YahtzeeRowProps {

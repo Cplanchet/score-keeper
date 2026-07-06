@@ -2,8 +2,8 @@ import { GlobalColors } from "@/constants/theme";
 import { ValidationRule } from "@/models/validation-tules";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import BoxInput from "./box-input";
-import { ThemedText } from "./themed-text";
+import BoxInput from "../common/box-input";
+import { ThemedText } from "../common/themed-text";
 import YahtzeeRow, { YahtzeeRowProps } from "./yahtzee-row";
 
 export interface InputYahtzeeRowProps extends YahtzeeRowProps {
@@ -20,18 +20,31 @@ export default function InputYahtzeeRow({
   label,
   value,
   width,
-  onSwipe = () => { },
+  onSwipe = () => {},
   onChange,
-  onBlur = () => { },
+  onBlur = () => {},
   onFocus,
   boxSize,
   validationRules = [],
 }: InputYahtzeeRowProps) {
-  const [getErrorMessage, setErrorMessage] = React.useState<string | null>(null)
+  const [getErrorMessage, setErrorMessage] = React.useState<string | null>(
+    null,
+  );
   return (
     <View style={styles.container}>
-      <YahtzeeRow width={width} onSwipe={() => { setErrorMessage(null); onSwipe() }}>
-        <ThemedText style={[value === 0 ? styles.crossed : undefined, getErrorMessage ? styles.errorText : undefined]}>
+      <YahtzeeRow
+        width={width}
+        onSwipe={() => {
+          setErrorMessage(null);
+          onSwipe();
+        }}
+      >
+        <ThemedText
+          style={[
+            value === 0 ? styles.crossed : undefined,
+            getErrorMessage ? styles.errorText : undefined,
+          ]}
+        >
           {label}
         </ThemedText>
         <BoxInput
@@ -39,29 +52,32 @@ export default function InputYahtzeeRow({
           value={value?.toString() || ""}
           onChange={(value: string | null) => {
             if (value === "0") {
-              onChange(0)
+              onChange(0);
               return;
             }
-            onChange(value !== null ? parseInt(value) || null : null)
-          }
-          }
+            onChange(value !== null ? parseInt(value) || null : null);
+          }}
           onBlur={() => {
-            setErrorMessage(null)
+            setErrorMessage(null);
             for (let rule of validationRules) {
               if (!rule.validate(value)) {
-                onChange(null)
+                onChange(null);
                 setErrorMessage(rule.message);
                 break;
               }
             }
-            onBlur()
+            onBlur();
           }}
           onFocus={onFocus}
           error={getErrorMessage !== null}
         />
       </YahtzeeRow>
-      {getErrorMessage !== null ? (<ThemedText type="subtext" style={styles.errorText}>{getErrorMessage}</ThemedText>) : undefined}
-    </View >
+      {getErrorMessage !== null ? (
+        <ThemedText type="subtext" style={styles.errorText}>
+          {getErrorMessage}
+        </ThemedText>
+      ) : undefined}
+    </View>
   );
 }
 
@@ -74,9 +90,9 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    gap: 8
+    gap: 8,
   },
   errorText: {
-    color: GlobalColors.error
-  }
+    color: GlobalColors.error,
+  },
 });

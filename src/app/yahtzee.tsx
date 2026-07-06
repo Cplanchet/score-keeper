@@ -1,12 +1,16 @@
-import BonusYahtzeeRow from "@/components/bonus-yahtzee-row";
-import BooleanYahtzeeRow from "@/components/boolean-yahtzee-row";
-import Button from "@/components/button";
-import DisplayYahtzeeRow from "@/components/display-yahtzee-row";
-import InputYahtzeeRow from "@/components/input-yahtzee-row";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import Button from "@/components/common/button";
+import { ThemedText } from "@/components/common/themed-text";
+import { ThemedView } from "@/components/common/themed-view";
+import BonusYahtzeeRow from "@/components/yahtzee/bonus-yahtzee-row";
+import BooleanYahtzeeRow from "@/components/yahtzee/boolean-yahtzee-row";
+import DisplayYahtzeeRow from "@/components/yahtzee/display-yahtzee-row";
+import InputYahtzeeRow from "@/components/yahtzee/input-yahtzee-row";
 import { useTheme } from "@/hooks/use-theme";
-import { ValidateDivisibleBy, ValidateLessThan, ValidateZeroOrBetween } from "@/models/validation-tules";
+import {
+  ValidateDivisibleBy,
+  ValidateLessThan,
+  ValidateZeroOrBetween,
+} from "@/models/validation-tules";
 import YahtzeeScoreCard from "@/models/yahtzee-score";
 import { useRouter } from "expo-router";
 
@@ -19,8 +23,7 @@ export default function Yahtzee() {
   );
   const [getEditMode, setEditMode] = useState(false);
   const [getIsFocused, setIsFocused] = useState(false);
-  const [show, setShow] = useState(true)
-
+  const [show, setShow] = useState(true);
 
   const theme = useTheme();
   const boxSize = 30;
@@ -29,12 +32,12 @@ export default function Yahtzee() {
   const router = useRouter();
 
   const resetPage = () => {
-    setShow(false)
+    setShow(false);
     setScoreCard(YahtzeeScoreCard.empty);
     setEditMode(false);
     setTimeout(() => {
-      setShow(true)
-    }, 100)
+      setShow(true);
+    }, 100);
   };
 
   return show ? (
@@ -144,7 +147,10 @@ export default function Yahtzee() {
                 onFocus={() => setIsFocused(true)}
                 boxSize={boxSize}
                 width={rowWidth}
-                validationRules={[new ValidateLessThan(11), new ValidateDivisibleBy(2)]}
+                validationRules={[
+                  new ValidateLessThan(11),
+                  new ValidateDivisibleBy(2),
+                ]}
               />
               <InputYahtzeeRow
                 label="Three"
@@ -157,7 +163,10 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
-                validationRules={[new ValidateLessThan(16), new ValidateDivisibleBy(3)]}
+                validationRules={[
+                  new ValidateLessThan(16),
+                  new ValidateDivisibleBy(3),
+                ]}
               />
               <InputYahtzeeRow
                 label="Four"
@@ -170,7 +179,10 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
-                validationRules={[new ValidateLessThan(21), new ValidateDivisibleBy(4)]}
+                validationRules={[
+                  new ValidateLessThan(21),
+                  new ValidateDivisibleBy(4),
+                ]}
               />
               <InputYahtzeeRow
                 label="Five"
@@ -183,7 +195,10 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
-                validationRules={[new ValidateLessThan(26), new ValidateDivisibleBy(5)]}
+                validationRules={[
+                  new ValidateLessThan(26),
+                  new ValidateDivisibleBy(5),
+                ]}
               />
               <InputYahtzeeRow
                 label="Six"
@@ -196,8 +211,10 @@ export default function Yahtzee() {
                 width={rowWidth}
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
-                validationRules={[new ValidateLessThan(31), new ValidateDivisibleBy(6)]}
-
+                validationRules={[
+                  new ValidateLessThan(31),
+                  new ValidateDivisibleBy(6),
+                ]}
               />
               <ThemedText align="center">
                 {getScoreCard.isTopFilled()
@@ -225,7 +242,6 @@ export default function Yahtzee() {
                 onBlur={() => setIsFocused(false)}
                 onFocus={() => setIsFocused(true)}
                 validationRules={[new ValidateZeroOrBetween(5, 30)]}
-
               />
               <InputYahtzeeRow
                 label="4 of a Kind"

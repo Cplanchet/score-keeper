@@ -1,6 +1,6 @@
 import { View } from "react-native";
-import Checkbox from "./checkbox";
-import { ThemedText } from "./themed-text";
+import Checkbox from "../common/checkbox";
+import { ThemedText } from "../common/themed-text";
 import { yahtzeeRowStyles } from "./yahtzee-row";
 
 export type BonusYahtzeeRowProps = {

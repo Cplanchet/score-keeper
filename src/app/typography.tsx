@@ -1,7 +1,7 @@
-import Button from "@/components/button";
-import Checkbox from "@/components/checkbox";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import Button from "@/components/common/button";
+import Checkbox from "@/components/common/checkbox";
+import { ThemedText } from "@/components/common/themed-text";
+import { ThemedView } from "@/components/common/themed-view";
 import { useTheme } from "@/hooks/use-theme";
 import React, { useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";

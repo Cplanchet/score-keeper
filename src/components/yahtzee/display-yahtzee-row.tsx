@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import { ThemedText } from "./themed-text";
+import { ThemedText } from "../common/themed-text";
 import { yahtzeeRowStyles } from "./yahtzee-row";
 
 export interface DisplayYahtzeeRowProps {

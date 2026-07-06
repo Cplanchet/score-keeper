@@ -1,5 +1,5 @@
-import { NavTile } from "@/components/nav-tile";
-import { ThemedView } from "@/components/themed-view";
+import { NavTile } from "@/components/common/nav-tile";
+import { ThemedView } from "@/components/common/themed-view";
 import { Spacing } from "@/constants/theme";
 import { useRouter } from "expo-router";
 import { StyleSheet } from "react-native";
