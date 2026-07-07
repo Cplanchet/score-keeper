@@ -1,24 +1,25 @@
 import { GlobalColors } from "@/constants/theme";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "../common/themed-text";
+import PlayerNameplate from "./player-nameplate";
 import ScoreButton from "./score-button";
 
 export type ScoreCardProps = {
   playerName: string;
   score: number;
   onScoreChange?: (newScore: number) => void;
+  onNameChange?: (name: string) => void;
 };
 
 export default function ScoreCard({
   playerName,
   score,
-  onScoreChange = () => {},
+  onScoreChange = () => { },
+  onNameChange = () => { }
 }: ScoreCardProps) {
   return (
     <View style={styles.container}>
-      <ThemedText type="label" style={styles.text}>
-        {playerName}
-      </ThemedText>
+      <PlayerNameplate name={playerName} onNameChange={onNameChange} />
       <View style={styles.scoreRow}>
         <ScoreButton label="-100" onPress={() => onScoreChange(score - 100)} />
         <ScoreButton label="-10" onPress={() => onScoreChange(score - 10)} />

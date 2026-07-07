@@ -3,7 +3,7 @@ import ScoreCard from "@/components/general/score-card";
 import { PlayerScore } from "@/models/score-card";
 import React from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { ThemedView } from "../../example/src/components/themed-view";
+import { ThemedView } from "../components/common/themed-view";
 
 export default function General() {
   const [players, setPlayers] = React.useState<PlayerScore[]>([]);
@@ -29,11 +29,12 @@ export default function General() {
         {players.map((player) => (
           <ScoreCard
             key={player.id}
-            playerName={player.name}
+            playerName={player.name ? player.name : "--"}
             score={player.score}
             onScoreChange={(newScore) =>
               updatePlayer(player.id, { ...player, score: newScore })
             }
+            onNameChange={(newName) => updatePlayer(player.id, { ...player, name: newName })}
           />
         ))}
         <Button variant="text" onPress={addPlayer} label="Add Player" />
