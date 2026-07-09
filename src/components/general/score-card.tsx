@@ -1,5 +1,5 @@
 import { GlobalColors } from "@/constants/theme";
-import { StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
 import { ThemedText } from "../common/themed-text";
 import PlayerNameplate from "./player-nameplate";
 import ScoreButton from "./score-button";
@@ -9,16 +9,18 @@ export type ScoreCardProps = {
   score: number;
   onScoreChange?: (newScore: number) => void;
   onNameChange?: (name: string) => void;
+  onDelete?: () => void;
 };
 
 export default function ScoreCard({
   playerName,
   score,
-  onScoreChange = () => { },
-  onNameChange = () => { }
+  onScoreChange = () => {},
+  onNameChange = () => {},
+  onDelete = () => {},
 }: ScoreCardProps) {
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onLongPress={onDelete}>
       <PlayerNameplate name={playerName} onNameChange={onNameChange} />
       <View style={styles.scoreRow}>
         <ScoreButton label="-100" onPress={() => onScoreChange(score - 100)} />
@@ -29,7 +31,7 @@ export default function ScoreCard({
         <ScoreButton label="+10" onPress={() => onScoreChange(score + 10)} />
         <ScoreButton label="+100" onPress={() => onScoreChange(score + 100)} />
       </View>
-    </View>
+    </Pressable>
   );
 }
 

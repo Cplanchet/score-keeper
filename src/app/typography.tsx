@@ -1,5 +1,6 @@
 import Button from "@/components/common/button";
 import Checkbox from "@/components/common/checkbox";
+import ConfirmModal from "@/components/common/confirm-modal";
 import { ThemedText } from "@/components/common/themed-text";
 import { ThemedView } from "@/components/common/themed-view";
 import { useTheme } from "@/hooks/use-theme";
@@ -40,6 +41,7 @@ function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
 
 export default function TypographyPage() {
   const [getChecked, setChecked] = React.useState(false);
+  const [modal, setModal] = React.useState(false);
   const theme = useTheme();
   const swipeableRef = useRef<SwipeableMethods>(null);
   return (
@@ -87,7 +89,9 @@ export default function TypographyPage() {
       <Button
         label="Primary"
         variant="primary"
-        onPress={() => {}}
+        onPress={() => {
+          setModal(true);
+        }}
         iconBefore="refresh"
         iconAfter="refresh"
       />
@@ -104,6 +108,17 @@ export default function TypographyPage() {
         onPress={() => {}}
         iconBefore="refresh"
         iconAfter="refresh"
+      />
+      <ConfirmModal
+        title="Confirm Action"
+        message="Are you sure you want to perform this action?"
+        isVisible={modal}
+        onConfirm={() => {
+          setModal(false);
+        }}
+        onCancel={() => {
+          setModal(false);
+        }}
       />
     </View>
   );
