@@ -4,16 +4,7 @@ import { Typography } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 
 export type ThemedTextProps = TextProps & {
-  type?:
-    | "normal"
-    | "headline"
-    | "title"
-    | "heading"
-    | "label"
-    | "link"
-    | "normal"
-    | "button"
-    | "subtext";
+  type?: keyof typeof Typography
   align?: "left" | "center" | "right";
   color?: "text" | "primary" | "disabled";
 };

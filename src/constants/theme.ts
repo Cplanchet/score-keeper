@@ -69,6 +69,10 @@ export const Typography = {
     fontSize: 14,
     fontWeight: 300,
   },
+  inputLabel: {
+    fontSize: 14,
+    fontWeight: 500
+  },
   subtext: {
     fontSize: 12,
     fontWeight: 200,

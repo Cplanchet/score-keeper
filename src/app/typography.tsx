@@ -1,6 +1,7 @@
 import Button from "@/components/common/button";
 import Checkbox from "@/components/common/checkbox";
 import ConfirmModal from "@/components/common/confirm-modal";
+import InputBox from "@/components/common/input-box";
 import { ThemedText } from "@/components/common/themed-text";
 import { ThemedView } from "@/components/common/themed-view";
 import { useTheme } from "@/hooks/use-theme";
@@ -41,6 +42,7 @@ function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
 
 export default function TypographyPage() {
   const [getChecked, setChecked] = React.useState(false);
+  const [text, setText] = React.useState('')
   const [modal, setModal] = React.useState(false);
   const theme = useTheme();
   const swipeableRef = useRef<SwipeableMethods>(null);
@@ -82,7 +84,7 @@ export default function TypographyPage() {
         </View>
         <Checkbox
           checked={false}
-          onChange={() => {}}
+          onChange={() => { }}
           disabled={true}
         ></Checkbox>
       </ThemedView>
@@ -98,14 +100,14 @@ export default function TypographyPage() {
       <Button
         label="Secondary"
         variant="secondary"
-        onPress={() => {}}
+        onPress={() => { }}
         iconBefore="refresh"
         iconAfter="refresh"
       />
       <Button
         label="Text"
         variant="text"
-        onPress={() => {}}
+        onPress={() => { }}
         iconBefore="refresh"
         iconAfter="refresh"
       />
@@ -120,6 +122,7 @@ export default function TypographyPage() {
           setModal(false);
         }}
       />
+      <InputBox label="text" value={text} onChange={setText} />
     </View>
   );
 }
