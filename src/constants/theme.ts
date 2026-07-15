@@ -25,7 +25,8 @@ export const GlobalColors = {
   onPrimary: "#ffffff",
   secondary: "#26547c",
   tertiary: "#92b6b1",
-  error: "#ff0000"
+  error: "#ff0000",
+  neutral: '#d0d0d0'
 } as const
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;

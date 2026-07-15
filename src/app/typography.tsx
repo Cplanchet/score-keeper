@@ -2,6 +2,7 @@ import Button from "@/components/common/button";
 import Checkbox from "@/components/common/checkbox";
 import ConfirmModal from "@/components/common/confirm-modal";
 import InputBox from "@/components/common/input-box";
+import ThemedSwitch from "@/components/common/themed-switch";
 import { ThemedText } from "@/components/common/themed-text";
 import { ThemedView } from "@/components/common/themed-view";
 import { useTheme } from "@/hooks/use-theme";
@@ -123,6 +124,7 @@ export default function TypographyPage() {
         }}
       />
       <InputBox label="text" value={text} onChange={setText} />
+      <ThemedSwitch label="Switch" checked={getChecked} onCheckedChanged={setChecked} />
     </View>
   );
 }
