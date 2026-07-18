@@ -1,6 +1,7 @@
 import Button from "@/components/common/button";
 import Checkbox from "@/components/common/checkbox";
 import ConfirmModal from "@/components/common/confirm-modal";
+import ExpandCollapse from "@/components/common/expand-collapse";
 import InputBox from "@/components/common/input-box";
 import Tab from "@/components/common/tab";
 import ThemedSwitch from "@/components/common/themed-switch";
@@ -43,9 +44,10 @@ function RightAction(prog: SharedValue<number>, drag: SharedValue<number>) {
 
 export default function TypographyPage() {
   const [getChecked, setChecked] = React.useState(false);
-  const [tab, setTab] = React.useState('Typography');
-  const [text, setText] = React.useState('')
+  const [tab, setTab] = React.useState("Typography");
+  const [text, setText] = React.useState("");
   const [modal, setModal] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(false);
   const theme = useTheme();
   const swipeableRef = useRef<SwipeableMethods>(null);
   return (
@@ -57,10 +59,14 @@ export default function TypographyPage() {
         height: "auto",
       }}
     >
-      <Tab active={tab} tabs={["Typography", "Misc"]} onActiveChange={(tab: string) => {
-        console.log(tab)
-        setTab(tab)
-      }} />
+      <Tab
+        active={tab}
+        tabs={["Typography", "Misc", "Expand"]}
+        onActiveChange={(tab: string) => {
+          console.log(tab);
+          setTab(tab);
+        }}
+      />
       {
         {
           Typography: (
@@ -96,7 +102,7 @@ export default function TypographyPage() {
               </View>
               <Checkbox
                 checked={false}
-                onChange={() => { }}
+                onChange={() => {}}
                 disabled={true}
               ></Checkbox>
               <Button
@@ -111,14 +117,14 @@ export default function TypographyPage() {
               <Button
                 label="Secondary"
                 variant="secondary"
-                onPress={() => { }}
+                onPress={() => {}}
                 iconBefore="refresh"
                 iconAfter="refresh"
               />
               <Button
                 label="Text"
                 variant="text"
-                onPress={() => { }}
+                onPress={() => {}}
                 iconBefore="refresh"
                 iconAfter="refresh"
               />
@@ -134,14 +140,24 @@ export default function TypographyPage() {
                 }}
               />
               <InputBox label="text" value={text} onChange={setText} />
-              <ThemedSwitch label="Switch" checked={getChecked} onCheckedChanged={setChecked} />
+              <ThemedSwitch
+                label="Switch"
+                checked={getChecked}
+                onCheckedChanged={setChecked}
+              />
             </>
-          )
+          ),
+          Expand: (
+            <ExpandCollapse
+              title="Expand Collapse"
+              expanded={expanded}
+              onExpandChanged={setExpanded}
+            >
+              <ThemedText>Content for expandable section</ThemedText>
+            </ExpandCollapse>
+          ),
         }[tab]
       }
-
-
-
     </View>
   );
 }
