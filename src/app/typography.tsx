@@ -7,6 +7,7 @@ import Tab from "@/components/common/tab";
 import ThemedSwitch from "@/components/common/themed-switch";
 import { ThemedText } from "@/components/common/themed-text";
 import { useTheme } from "@/hooks/use-theme";
+import CanastaPageViewModel from "@/models/canasta-page-view-model";
 import React, { useRef } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ReanimatedSwipeable, {
@@ -48,8 +49,12 @@ export default function TypographyPage() {
   const [text, setText] = React.useState("");
   const [modal, setModal] = React.useState(false);
   const [expanded, setExpanded] = React.useState(false);
-  const theme = useTheme();
+  const [viewModel, setViewModelState] = React.useState(
+    new CanastaPageViewModel(),
+  );
+
   const swipeableRef = useRef<SwipeableMethods>(null);
+  const theme = useTheme();
   return (
     <View
       style={{
@@ -61,7 +66,7 @@ export default function TypographyPage() {
     >
       <Tab
         active={tab}
-        tabs={["Typography", "Misc", "Expand"]}
+        tabs={["Typography", "Misc", "Expand", "Test"]}
         onActiveChange={(tab: string) => {
           console.log(tab);
           setTab(tab);
@@ -155,6 +160,24 @@ export default function TypographyPage() {
             >
               <ThemedText>Content for expandable section</ThemedText>
             </ExpandCollapse>
+          ),
+          Test: (
+            <>
+              <ThemedText>
+                {viewModel.state.formState.us.mixedCanastas}
+              </ThemedText>
+              <Button
+                onPress={() =>
+                  setViewModelState(
+                    viewModel.onMixedChange(
+                      "us",
+                      viewModel.state.formState.us.mixedCanastas + 1,
+                    ),
+                  )
+                }
+                label={"Test"}
+              ></Button>
+            </>
           ),
         }[tab]
       }
