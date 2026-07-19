@@ -175,7 +175,21 @@ export default function TypographyPage() {
                     ),
                   )
                 }
-                label={"Test"}
+                label="Us"
+              ></Button>
+              <ThemedText>
+                {viewModel.state.formState.them.mixedCanastas}
+              </ThemedText>
+              <Button
+                onPress={() =>
+                  setViewModelState(
+                    viewModel.onMixedChange(
+                      "them",
+                      viewModel.state.formState.them.mixedCanastas + 1,
+                    ),
+                  )
+                }
+                label="Them"
               ></Button>
             </>
           ),
