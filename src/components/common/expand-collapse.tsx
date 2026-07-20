@@ -13,7 +13,7 @@ export type ExpandCollapseProps = {
 export default function ExpandCollapse({
   title,
   expanded,
-  onExpandChanged = () => {},
+  onExpandChanged = () => { },
   children,
 }: PropsWithChildren<ExpandCollapseProps>) {
   const theme = useTheme();
@@ -23,12 +23,15 @@ export default function ExpandCollapse({
       ref={containerRef}
       style={[
         styles.container,
-        { backgroundColor: theme.background },
+        {
+          backgroundColor: theme.background,
+          borderColor: theme.text
+        },
         {
           transitionProperty: "maxHeight",
           transitionDuration: "500ms",
           maxHeight: expanded ? containerRef.current?.scrollHeight : 68,
-        },
+        }
       ]}
     >
       <Pressable
@@ -57,6 +60,18 @@ const styles = StyleSheet.create({
     padding: 16,
     width: "100%",
     overflow: "hidden",
+    borderWidth: 1,
+    borderRadius: 5,
+    boxShadow: [
+      {
+        offsetX: 3,
+        offsetY: 3,
+        blurRadius: 3,
+        spreadDistance: 0,
+        color: "#00000033",
+        inset: false,
+      },
+    ],
   },
   header: {
     flexDirection: "row",

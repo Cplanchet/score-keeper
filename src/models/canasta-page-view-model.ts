@@ -4,7 +4,6 @@ export default class CanastaPageViewModel {
   constructor(public readonly state = CanastaPageState.default) { }
 
   public onMixedChange(team: "us" | "them", value: number) {
-
     return this.withState(this.state.copy({ formState: { [team]: this.state.formState[team].copy({ mixedCanastas: value }) } }))
   }
 
@@ -13,7 +12,7 @@ export default class CanastaPageViewModel {
   }
 }
 
-class CanastaPageState {
+export class CanastaPageState {
 
   private static _default?: CanastaPageState = undefined;
 
@@ -55,7 +54,7 @@ class CanastaPageState {
   }
 }
 
-class CanastaScore {
+export class CanastaScore {
   public readonly score: number;
   public readonly firstMeldMinimum: number;
   private constructor(
@@ -81,7 +80,7 @@ class CanastaScore {
   }
 }
 
-class CanastaHandScore {
+export class CanastaHandScore {
   public readonly totalScore: number
   private constructor(
     public readonly canastaBonus: number = 0,
@@ -114,12 +113,12 @@ class CanastaHandScore {
   }
 }
 
-enum CanastaPageMode {
+export enum CanastaPageMode {
   VIEW = 'view',
   SCORE = 'score'
 }
 
-class CanastaFormState {
+export class CanastaFormState {
   public constructor(
     public readonly mixedCanastas: number = 0,
     public readonly naturalCanastas: number = 0,
