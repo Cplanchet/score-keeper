@@ -2,6 +2,8 @@ import { CanastaHandScore, CanastaPageState } from "@/models/canasta-page-view-m
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import ExpandCollapse from "../common/expand-collapse";
+import InputBox from "../common/input-box";
+import ThemedSwitch from "../common/themed-switch";
 import { ThemedText } from "../common/themed-text";
 import { ThemedView } from "../common/themed-view";
 
@@ -57,6 +59,18 @@ export default function SideBySideView({ state }: SideBySideViewProps) {
               </ExpandCollapse>
             )
           })}
+          <View style={styles.scoreSection}>
+            <ThemedText type="label">Canasta Bonus</ThemedText>
+            <ThemedText type="subtext">Enter the number of canastas scored</ThemedText>
+            <View style={styles.inputRow}>
+              <InputBox label="Mixed" value={state.formState[team].mixedCanastas.toString()} />
+              <InputBox label="Natural" value={state.formState[team].naturalCanastas.toString()} />
+            </View>
+          </View>
+          <InputBox label="Red Threes" value={state.formState[team].redThrees.toString()} />
+          <InputBox label="Meld Score" value={state.formState[team].meld.toString()} />
+          <InputBox label="Points In Hand" value={state.formState[team].meld.toString()} />
+          <ThemedSwitch checked={state.formState[team].wentOut} label="Went out?" />
         </View>
       ))}
     </ThemedView>
@@ -74,7 +88,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignItems: "center",
     padding: 16,
-    gap: 16,
+    gap: 32,
     flexGrow: 1,
   },
   nameSection: {
@@ -97,5 +111,18 @@ const styles = StyleSheet.create({
   },
   labelColumn: {
     alignItems: 'flex-end'
+  },
+  scoreSection: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    gap: 8
+  },
+  inputRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16
   }
 });
