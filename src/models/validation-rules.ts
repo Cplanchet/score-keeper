@@ -90,3 +90,17 @@ export class ValidateDivisibleBy implements ValidationRule {
     return value % this.divisor === 0
   }
 }
+
+export class ValidateRequired implements ValidationRule {
+  public message: string
+  constructor(message?: string) {
+    this.message = message ?? `Field is Required`
+  }
+
+  validate(value: any) {
+    if (value === null || value === undefined || value === '') {
+      return false
+    }
+    return true
+  }
+}

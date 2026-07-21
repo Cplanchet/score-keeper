@@ -27,6 +27,8 @@ export default function Canasta() {
         onWentOutChange={(team, value) => {
           setViewModel(viewModel.onWentOutChange(team, value));
         }}
+        onNextHandPress={() => setViewModel(viewModel.onNextHand())}
+        onSaveScore={() => setViewModel(viewModel.onSaveScore())}
       />
     </ScrollView>
   );

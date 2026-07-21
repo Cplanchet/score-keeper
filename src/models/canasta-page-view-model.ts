@@ -1,3 +1,5 @@
+import { ValidateBetween, ValidateDivisibleBy, ValidateRequired, ValidationRule } from "./validation-rules";
+
 export default class CanastaPageViewModel {
 
   constructor(public readonly state = CanastaPageState.default) { }
@@ -55,6 +57,39 @@ export default class CanastaPageViewModel {
 
   public withState(state: CanastaPageState) {
     return new CanastaPageViewModel(state)
+  }
+
+  public onNextHand() {
+    return this.withState(this.state.copy({ pageMode: CanastaPageMode.SCORE, formState: { us: CanastaFormState.default, them: CanastaFormState.default } }))
+  }
+
+  public onSaveScore() {
+    const formState = {
+      us: this.state.formState.us,
+      them: this.state.formState.them
+    }
+    if (!formState.us.isValid || !formState.them.isValid) {
+      return this;
+    }
+    const scoreState: { us?: CanastaScore, them?: CanastaScore } = {};
+    ["us" as "us", "them" as "them"].map((team) => {
+      Object.defineProperty(scoreState, team, {
+
+        value: this.state.scores[team].addHand(CanastaHandScore.scoreHand({
+          canastaCount: {
+            mixed: formState[team].mixedCanastas!,
+            natural: formState[team].naturalCanastas!
+          },
+          redThrees: formState[team].redThrees!,
+          meld: formState[team].meld!,
+          pointsInHand: formState[team].pointsInHand!,
+          wentOut: formState[team].wentOut
+        }))
+      })
+
+    })
+
+    return this.withState(this.state.copy({ pageMode: CanastaPageMode.VIEW, score: { us: scoreState.us, them: scoreState.them } }))
   }
 }
 
@@ -167,6 +202,26 @@ export enum CanastaPageMode {
 }
 
 export class CanastaFormState {
+  private readonly canastaValidationRules: CanastaFormStateValidationRules[] = [
+    { rule: new ValidateBetween(0, 13), showErrorMessage: true },
+    { rule: new ValidateRequired(), showErrorMessage: false }
+  ] as const
+  private readonly redThreeValidationRules: CanastaFormStateValidationRules[] = [
+    { rule: new ValidateBetween(0, 4), showErrorMessage: true },
+    { rule: new ValidateRequired(), showErrorMessage: false }
+  ] as const
+  private readonly scoreValidationRules: CanastaFormStateValidationRules[] = [
+    { rule: new ValidateRequired(), showErrorMessage: false },
+    { rule: new ValidateDivisibleBy(5), showErrorMessage: true }
+  ] as const
+
+  public readonly mixedCanastaError: string;
+  public readonly naturalCanastaError: string;
+  public readonly redThreesError: string;
+  public readonly meldError: string;
+  public readonly pointsInHandError: string;
+  public readonly isValid: boolean;
+
   public constructor(
     public readonly mixedCanastas: number | null = null,
     public readonly naturalCanastas: number | null = null,
@@ -174,7 +229,70 @@ export class CanastaFormState {
     public readonly meld: number | null = null,
     public readonly pointsInHand: number | null = null,
     public readonly wentOut: boolean = false
-  ) { }
+  ) {
+    this.isValid = true
+
+    let result = this.runValidationRules(this.canastaValidationRules, this.mixedCanastas)
+    this.mixedCanastaError = result.errorMessage
+
+    if (!result.isValid) {
+      this.isValid = false
+    }
+
+    result = this.runValidationRules(this.canastaValidationRules, this.naturalCanastas)
+    this.naturalCanastaError = result.errorMessage
+
+    if (!result.isValid) {
+      this.isValid = false
+    }
+
+    result = this.runValidationRules(this.redThreeValidationRules, this.redThrees)
+    this.redThreesError = result.errorMessage
+
+    if (!result.isValid) {
+      this.isValid = false
+    }
+
+    result = this.runValidationRules(this.scoreValidationRules, this.meld)
+    this.meldError = result.errorMessage
+
+    if (!result.isValid) {
+      this.isValid = false
+    }
+
+    result = this.runValidationRules(this.scoreValidationRules, this.pointsInHand)
+    this.pointsInHandError = result.errorMessage
+
+    if (!result.isValid) {
+      this.isValid = false
+    }
+  }
+
+  private runValidationRules(rules: CanastaFormStateValidationRules[], value: number | null): { isValid: boolean, errorMessage: string } {
+    let errorMessage = '';
+    let isValid = true;
+    rules.forEach(element => {
+      const result = this.validate(element, value)
+      if (typeof result === "string") {
+        errorMessage = result
+        isValid = false
+      } else if (result === false) {
+        isValid = false
+      }
+    });
+
+    return { isValid, errorMessage }
+  }
+
+  private validate(rule: CanastaFormStateValidationRules, value: number | null): boolean | string {
+    const result = rule.rule.validate(value)
+    if (result) {
+      return true
+    } else if (rule.showErrorMessage) {
+      return rule.rule.message
+    }
+    return false
+  }
 
   public static default = new CanastaFormState()
 
@@ -188,4 +306,9 @@ export class CanastaFormState {
       state.wentOut === undefined ? this.wentOut : state.wentOut
     )
   }
+}
+
+type CanastaFormStateValidationRules = {
+  rule: ValidationRule,
+  showErrorMessage: boolean
 }

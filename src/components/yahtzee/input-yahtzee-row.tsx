@@ -1,5 +1,5 @@
 import { GlobalColors } from "@/constants/theme";
-import { ValidationRule } from "@/models/validation-tules";
+import { ValidationRule } from "@/models/validation-rules";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import BoxInput from "../common/box-input";

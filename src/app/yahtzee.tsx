@@ -10,7 +10,7 @@ import {
   ValidateDivisibleBy,
   ValidateLessThan,
   ValidateZeroOrBetween,
-} from "@/models/validation-tules";
+} from "@/models/validation-rules";
 import YahtzeeScoreCard from "@/models/yahtzee-score";
 import { useRouter } from "expo-router";
 
