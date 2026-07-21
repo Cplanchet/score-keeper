@@ -1,16 +1,64 @@
-
 export default class CanastaPageViewModel {
 
   constructor(public readonly state = CanastaPageState.default) { }
 
-  public onMixedChange(team: "us" | "them", value: number) {
-    return this.withState(this.state.copy({ formState: { [team]: this.state.formState[team].copy({ mixedCanastas: value }) } }))
+  public onMixedChange(team: CanastaTeam, value: string) {
+    return this.changeFormState(team, value, "mixedCanastas")
+  }
+
+  public onNaturalChange(team: CanastaTeam, value: string) {
+    return this.changeFormState(team, value, "naturalCanastas")
+  }
+
+  public onRedThreesChange(team: CanastaTeam, value: string) {
+    return this.changeFormState(team, value, "redThrees")
+  }
+
+  public onMeldChange(team: CanastaTeam, value: string) {
+    return this.changeFormState(team, value, "meld")
+  }
+  public onPointsInHandChange(team: CanastaTeam, value: string) {
+    return this.changeFormState(team, value, "pointsInHand")
+  }
+
+  public onWentOutChange(team: CanastaTeam, value: boolean) {
+    const newState = { us: { wentOut: false }, them: { wentOut: false } }
+    newState[team].wentOut = value;
+
+    return this.withState(this.state.copy({ formState: { us: this.state.formState.us.copy(newState.us), them: this.state.formState.them.copy(newState.them) } }))
+  }
+
+  private changeFormState(team: CanastaTeam, value: string, field: keyof CanastaFormState) {
+    const parsedValue: number | null | undefined = this.parseText(value)
+    if (parsedValue === undefined) {
+      return this
+    }
+    const state = {};
+    Object.defineProperty(state, field, { value: parsedValue, writable: false })
+    return this.withState(this.createNewStateForFormUpdate(team, state))
+  }
+
+  private createNewStateForFormUpdate(team: CanastaTeam, newState: Partial<CanastaFormState>) {
+    return this.state.copy({ formState: { [team]: this.state.formState[team].copy(newState) } })
+  }
+
+  private parseText(value: string): number | null | undefined {
+    if (!value) {
+      return null;
+    }
+    const parsed = Number.parseInt(value)
+    if (Number.isNaN(parsed)) {
+      return undefined
+    }
+    return parsed
   }
 
   public withState(state: CanastaPageState) {
     return new CanastaPageViewModel(state)
   }
 }
+
+export type CanastaTeam = "us" | "them"
 
 export class CanastaPageState {
 
@@ -28,7 +76,7 @@ export class CanastaPageState {
   }
 
   public copy(
-    value: {
+    value?: {
       score?: {
         us?: CanastaScore,
         them?: CanastaScore
@@ -42,13 +90,13 @@ export class CanastaPageState {
   ) {
     return new CanastaPageState(
       {
-        us: value.score?.us ?? this.scores.us,
-        them: value.score?.them ?? this.scores.them
+        us: value?.score?.us ?? this.scores.us,
+        them: value?.score?.them ?? this.scores.them
       },
-      value.pageMode ?? this.pageMode,
+      value?.pageMode ?? this.pageMode,
       {
-        us: value.formState?.us ?? this.formState.us,
-        them: value.formState?.them ?? this.formState.them
+        us: value?.formState?.us ?? this.formState.us,
+        them: value?.formState?.them ?? this.formState.them
       }
     )
   }
@@ -120,11 +168,11 @@ export enum CanastaPageMode {
 
 export class CanastaFormState {
   public constructor(
-    public readonly mixedCanastas: number = 0,
-    public readonly naturalCanastas: number = 0,
-    public readonly redThrees: number = 0,
-    public readonly meld: number = 0,
-    public readonly pointsInHand: number = 0,
+    public readonly mixedCanastas: number | null = null,
+    public readonly naturalCanastas: number | null = null,
+    public readonly redThrees: number | null = null,
+    public readonly meld: number | null = null,
+    public readonly pointsInHand: number | null = null,
     public readonly wentOut: boolean = false
   ) { }
 
@@ -132,12 +180,12 @@ export class CanastaFormState {
 
   public copy(state: Partial<CanastaFormState>) {
     return new CanastaFormState(
-      state.mixedCanastas ?? this.mixedCanastas,
-      state.naturalCanastas ?? this.naturalCanastas,
-      state.redThrees ?? this.redThrees,
-      state.meld ?? this.meld,
-      state.pointsInHand ?? this.pointsInHand,
-      state.wentOut ?? this.wentOut
+      state.mixedCanastas === undefined ? this.mixedCanastas : state.mixedCanastas,
+      state.naturalCanastas === undefined ? this.naturalCanastas : state.naturalCanastas,
+      state.redThrees === undefined ? this.redThrees : state.redThrees,
+      state.meld === undefined ? this.meld : state.meld,
+      state.pointsInHand === undefined ? this.pointsInHand : state.pointsInHand,
+      state.wentOut === undefined ? this.wentOut : state.wentOut
     )
   }
 }
