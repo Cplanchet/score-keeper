@@ -66,7 +66,7 @@ export default function TypographyPage() {
     >
       <Tab
         active={tab}
-        tabs={["Typography", "Misc", "Expand", "Test"]}
+        tabs={["Typography", "Misc", "Expand"]}
         onActiveChange={(tab: string) => {
           console.log(tab);
           setTab(tab);
@@ -107,7 +107,7 @@ export default function TypographyPage() {
               </View>
               <Checkbox
                 checked={false}
-                onChange={() => {}}
+                onChange={() => { }}
                 disabled={true}
               ></Checkbox>
               <Button
@@ -122,14 +122,14 @@ export default function TypographyPage() {
               <Button
                 label="Secondary"
                 variant="secondary"
-                onPress={() => {}}
+                onPress={() => { }}
                 iconBefore="refresh"
                 iconAfter="refresh"
               />
               <Button
                 label="Text"
                 variant="text"
-                onPress={() => {}}
+                onPress={() => { }}
                 iconBefore="refresh"
                 iconAfter="refresh"
               />
@@ -160,39 +160,7 @@ export default function TypographyPage() {
             >
               <ThemedText>Content for expandable section</ThemedText>
             </ExpandCollapse>
-          ),
-          Test: (
-            <>
-              <ThemedText>
-                {viewModel.state.formState.us.mixedCanastas}
-              </ThemedText>
-              <Button
-                onPress={() =>
-                  setViewModelState(
-                    viewModel.onMixedChange(
-                      "us",
-                      viewModel.state.formState.us.mixedCanastas + 1,
-                    ),
-                  )
-                }
-                label="Us"
-              ></Button>
-              <ThemedText>
-                {viewModel.state.formState.them.mixedCanastas}
-              </ThemedText>
-              <Button
-                onPress={() =>
-                  setViewModelState(
-                    viewModel.onMixedChange(
-                      "them",
-                      viewModel.state.formState.them.mixedCanastas + 1,
-                    ),
-                  )
-                }
-                label="Them"
-              ></Button>
-            </>
-          ),
+          )
         }[tab]
       }
     </View>

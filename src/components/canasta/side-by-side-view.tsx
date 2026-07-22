@@ -108,6 +108,7 @@ export default function SideBySideView({
                       onChange={(value: string) =>
                         onMixedCanastaChange(team, value)
                       }
+                      error={state.formState[team].mixedCanastaError}
                     />
                     <InputBox
                       label="Natural"
@@ -117,6 +118,7 @@ export default function SideBySideView({
                       onChange={(value: string) =>
                         onNaturalCanastaChange(team, value)
                       }
+                      error={state.formState[team].naturalCanastaError}
                     />
                   </View>
                 </View>
@@ -124,11 +126,14 @@ export default function SideBySideView({
                   label="Red Threes"
                   value={state.formState[team].redThrees?.toString() ?? ""}
                   onChange={(value: string) => onRedThreeChange(team, value)}
+                  error={state.formState[team].redThreesError}
+
                 />
                 <InputBox
                   label="Meld Score"
                   value={state.formState[team].meld?.toString() ?? ""}
                   onChange={(value: string) => onMeldScoreChange(team, value)}
+                  error={state.formState[team].meldError}
                 />
                 <InputBox
                   label="Points In Hand"
@@ -136,6 +141,7 @@ export default function SideBySideView({
                   onChange={(value: string) =>
                     onPointsInHandChange(team, value)
                   }
+                  error={state.formState[team].pointsInHandError}
                 />
                 <ThemedSwitch
                   checked={state.formState[team].wentOut}
@@ -214,7 +220,7 @@ const styles = StyleSheet.create({
   inputRow: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     gap: 16,
   },
 });

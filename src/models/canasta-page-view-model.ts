@@ -186,7 +186,7 @@ export class CanastaHandScore {
     pointsInHand: number
   }
   ): CanastaHandScore {
-    const canastaBonus = (score.canastaCount.mixed ?? 0) * 300 + (score.canastaCount.natural ?? 0) * 500;
+    const canastaBonus = ((score.canastaCount.mixed ?? 0) * 300) + ((score.canastaCount.natural ?? 0) * 500);
     const pointsInHand = score.pointsInHand;
     const redThreeScore = score.redThrees === 4 ? score.redThrees * 200 : score.redThrees * 100;
     const meldScore = score.meld
