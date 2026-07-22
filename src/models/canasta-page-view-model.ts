@@ -89,7 +89,27 @@ export default class CanastaPageViewModel {
 
     })
 
-    return this.withState(this.state.copy({ pageMode: CanastaPageMode.VIEW, score: { us: scoreState.us, them: scoreState.them } }))
+    const gameOver = scoreState.us?.hasWon || scoreState.them?.hasWon;
+
+    const winner = gameOver ? this.calculateWinner(scoreState) : null
+
+    const pageMode = gameOver ? CanastaPageMode.WIN : CanastaPageMode.VIEW
+
+    return this.withState(this.state.copy({ pageMode: pageMode, score: { us: scoreState.us, them: scoreState.them }, winner: winner }))
+  }
+
+  private calculateWinner(scoreState: { us?: CanastaScore, them?: CanastaScore }): "us" | "them" | null {
+    if (scoreState.us?.hasWon && scoreState.us.wentOutLast) {
+      return "us"
+    } else if (scoreState.them?.hasWon && scoreState.them.wentOutLast) {
+      return "them"
+    } else if (scoreState.us?.hasWon && (scoreState.us?.score ?? 0) > (scoreState.them?.score ?? 0)) {
+      return "us"
+    } else if (scoreState.them?.hasWon && (scoreState.them?.score ?? 0) > (scoreState.us?.score ?? 0)) {
+      return "them"
+    } else {
+      return null
+    }
   }
 }
 
@@ -101,6 +121,7 @@ export class CanastaPageState {
 
   private constructor(
     public scores: { us: CanastaScore, them: CanastaScore } = { us: CanastaScore.default, them: CanastaScore.default },
+    public winner: "us" | "them" | null = null,
     public pageMode: CanastaPageMode = CanastaPageMode.VIEW,
     public formState: { us: CanastaFormState, them: CanastaFormState } = { us: CanastaFormState.default, them: CanastaFormState.default }
   ) { }
@@ -115,7 +136,8 @@ export class CanastaPageState {
       score?: {
         us?: CanastaScore,
         them?: CanastaScore
-      }
+      },
+      winner?: "us" | "them" | null
       formState?: {
         us?: CanastaFormState,
         them?: CanastaFormState
@@ -128,6 +150,7 @@ export class CanastaPageState {
         us: value?.score?.us ?? this.scores.us,
         them: value?.score?.them ?? this.scores.them
       },
+      value?.winner !== undefined ? value?.winner : this.winner,
       value?.pageMode ?? this.pageMode,
       {
         us: value?.formState?.us ?? this.formState.us,
@@ -140,6 +163,8 @@ export class CanastaPageState {
 export class CanastaScore {
   public readonly score: number;
   public readonly firstMeldMinimum: number;
+  public readonly hasWon: boolean
+  public readonly wentOutLast: boolean
   private constructor(
     public readonly hands: CanastaHandScore[] = [],
   ) {
@@ -154,6 +179,9 @@ export class CanastaScore {
     } else {
       this.firstMeldMinimum = 50
     }
+
+    this.hasWon = this.score >= 5000;
+    this.wentOutLast = hands.length > 0 ? hands[hands.length - 1].goingOutBonus === 100 : false
   }
 
   public static default: CanastaScore = new CanastaScore();
@@ -198,7 +226,8 @@ export class CanastaHandScore {
 
 export enum CanastaPageMode {
   VIEW = 'view',
-  SCORE = 'score'
+  SCORE = 'score',
+  WIN = 'win'
 }
 
 export class CanastaFormState {

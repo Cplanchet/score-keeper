@@ -23,6 +23,7 @@ export type SideBySideViewProps = {
   onWentOutChange: (team: CanastaTeam, value: boolean) => void;
   onNextHandPress: () => void;
   onSaveScore: () => void;
+  onNewGame: () => void;
 };
 
 export default function SideBySideView({
@@ -35,6 +36,7 @@ export default function SideBySideView({
   onWentOutChange,
   onNextHandPress,
   onSaveScore,
+  onNewGame,
 }: SideBySideViewProps) {
   const teams = ["us", "them"] as const;
   const teamNames: Record<(typeof teams)[number], string> = {
@@ -48,6 +50,11 @@ export default function SideBySideView({
 
   return (
     <ThemedView style={styles.root}>
+      {state.pageMode === CanastaPageMode.WIN ? (
+        <View style={{ flexGrow: 0 }}>
+          <ThemedText type="headline">{`${state.winner === "us" ? "We" : "They"} Are the winners!`}</ThemedText>
+        </View>
+      ) : undefined}
       <View style={styles.container}>
         {teams.map((team) => (
           <View key={team} style={styles.teamContainer}>
@@ -127,7 +134,6 @@ export default function SideBySideView({
                   value={state.formState[team].redThrees?.toString() ?? ""}
                   onChange={(value: string) => onRedThreeChange(team, value)}
                   error={state.formState[team].redThreesError}
-
                 />
                 <InputBox
                   label="Meld Score"
@@ -159,10 +165,27 @@ export default function SideBySideView({
         <View style={{ flexGrow: 0 }}>
           <Button label="Next Hand" onPress={onNextHandPress} />
         </View>
-      ) : state.formState.us.isValid && state.formState.them.isValid ? (
+      ) : state.pageMode === CanastaPageMode.SCORE &&
+        state.formState.us.isValid &&
+        state.formState.them.isValid ? (
         <>
           <Button label="Save Score" onPress={onSaveScore} />
         </>
+      ) : undefined}
+      {state.pageMode === CanastaPageMode.WIN ? (
+        <View style={{ flexGrow: 0 }}>
+          <Button
+            label="New Game"
+            onPress={() => {
+              const [usExpanded, setUsExpanded] = expanded.us;
+              const [themExpanded, setThemExpanded] = expanded.them;
+
+              setUsExpanded(null);
+              setThemExpanded(null);
+              onNewGame();
+            }}
+          />
+        </View>
       ) : undefined}
     </ThemedView>
   );

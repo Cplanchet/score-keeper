@@ -29,6 +29,7 @@ export default function Canasta() {
         }}
         onNextHandPress={() => setViewModel(viewModel.onNextHand())}
         onSaveScore={() => setViewModel(viewModel.onSaveScore())}
+        onNewGame={() => setViewModel(new CanastaPageViewModel())}
       />
     </ScrollView>
   );
