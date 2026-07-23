@@ -211,6 +211,7 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 32,
     flexGrow: 1,
+    flexShrink: 1
   },
   nameSection: {
     display: "flex",
@@ -243,7 +244,9 @@ const styles = StyleSheet.create({
   inputRow: {
     display: "flex",
     flexDirection: "row",
-    alignItems: "flex-start",
+    alignItems: "center",
+    justifyContent: 'center',
     gap: 16,
+    flexWrap: 'wrap'
   },
 });
