@@ -1,4 +1,9 @@
-import { CanastaFormState, CanastaHandScore, CanastaPageMode, CanastaScore } from "@/models/canasta-page-view-model";
+import {
+  CanastaFormState,
+  CanastaHandScore,
+  CanastaPageMode,
+  CanastaScore,
+} from "@/models/canasta-page-view-model";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import ExpandCollapse from "../common/expand-collapse";
@@ -7,21 +12,31 @@ import ThemedSwitch from "../common/themed-switch";
 import { ThemedText } from "../common/themed-text";
 
 export type CanastaTeamSectionProps = {
-  teamName: string
-  scoreState: CanastaScore,
-  formState: CanastaFormState,
-  pageMode: CanastaPageMode,
-  onMixedCanastaChange: (value: string) => void,
-  onNaturalCanastaChange: (value: string) => void,
-  onRedThreeChange: (value: string) => void,
-  onMeldScoreChange: (value: string) => void,
-  onPointsInHandChange: (value: string) => void,
-  onWentOutChange: (value: boolean) => void,
-}
+  teamName: string;
+  scoreState: CanastaScore;
+  formState: CanastaFormState;
+  pageMode: CanastaPageMode;
+  onMixedCanastaChange: (value: string) => void;
+  onNaturalCanastaChange: (value: string) => void;
+  onRedThreeChange: (value: string) => void;
+  onMeldScoreChange: (value: string) => void;
+  onPointsInHandChange: (value: string) => void;
+  onWentOutChange: (value: boolean) => void;
+};
 
-export default function CanastaTeamSection({ teamName, scoreState, formState, pageMode, onMixedCanastaChange,
-  onNaturalCanastaChange, onRedThreeChange, onMeldScoreChange, onPointsInHandChange, onWentOutChange }: CanastaTeamSectionProps) {
-  const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null)
+export default function CanastaTeamSection({
+  teamName,
+  scoreState,
+  formState,
+  pageMode,
+  onMixedCanastaChange,
+  onNaturalCanastaChange,
+  onRedThreeChange,
+  onMeldScoreChange,
+  onPointsInHandChange,
+  onWentOutChange,
+}: CanastaTeamSectionProps) {
+  const [expandedIndex, setExpandedIndex] = React.useState<number | null>(null);
   return (
     <View style={styles.teamContainer}>
       <View style={styles.nameSection}>
@@ -29,41 +44,37 @@ export default function CanastaTeamSection({ teamName, scoreState, formState, pa
         <ThemedText type="label">{scoreState.score}</ThemedText>
         <ThemedText type="subtext">{`${scoreState.firstMeldMinimum} points needed for first meld`}</ThemedText>
       </View>
-      {scoreState.hands.map(
-        (hand: CanastaHandScore, index: number) => {
-          return (
-            <ExpandCollapse
-              key={index}
-              title={`Hand ${index + 1}`}
-              expanded={expandedIndex === index}
-              onExpandChanged={(value) =>
-                value ? setExpandedIndex(index) : setExpandedIndex(null)
-              }
-            >
-              <View style={styles.handTableContainer}>
-                <View
-                  style={[styles.handTableColumn, styles.labelColumn]}
-                >
-                  <ThemedText>Canasta Bonus:</ThemedText>
-                  <ThemedText>Red Threes Score:</ThemedText>
-                  <ThemedText>Meld Score:</ThemedText>
-                  <ThemedText>Going Out Bonus:</ThemedText>
-                  <ThemedText>Points In Hand:</ThemedText>
-                  <ThemedText type="label">Total:</ThemedText>
-                </View>
-                <View style={styles.handTableColumn}>
-                  <ThemedText>{hand.canastaBonus}</ThemedText>
-                  <ThemedText>{hand.redThreeScore}</ThemedText>
-                  <ThemedText>{hand.meldScore}</ThemedText>
-                  <ThemedText>{hand.goingOutBonus}</ThemedText>
-                  <ThemedText>{`-${hand.pointsInHand}`}</ThemedText>
-                  <ThemedText type="label">{hand.totalScore}</ThemedText>
-                </View>
+      {scoreState.hands.map((hand: CanastaHandScore, index: number) => {
+        return (
+          <ExpandCollapse
+            key={index}
+            title={`Hand ${index + 1}`}
+            expanded={expandedIndex === index}
+            onExpandChanged={(value) =>
+              value ? setExpandedIndex(index) : setExpandedIndex(null)
+            }
+          >
+            <View style={styles.handTableContainer}>
+              <View style={[styles.handTableColumn, styles.labelColumn]}>
+                <ThemedText>Canasta Bonus:</ThemedText>
+                <ThemedText>Red Threes Score:</ThemedText>
+                <ThemedText>Meld Score:</ThemedText>
+                <ThemedText>Going Out Bonus:</ThemedText>
+                <ThemedText>Points In Hand:</ThemedText>
+                <ThemedText type="label">Total:</ThemedText>
               </View>
-            </ExpandCollapse>
-          );
-        },
-      )}
+              <View style={styles.handTableColumn}>
+                <ThemedText>{hand.canastaBonus}</ThemedText>
+                <ThemedText>{hand.redThreeScore}</ThemedText>
+                <ThemedText>{hand.meldScore}</ThemedText>
+                <ThemedText>{hand.goingOutBonus}</ThemedText>
+                <ThemedText>{`-${hand.pointsInHand}`}</ThemedText>
+                <ThemedText type="label">{hand.totalScore}</ThemedText>
+              </View>
+            </View>
+          </ExpandCollapse>
+        );
+      })}
       {pageMode === CanastaPageMode.SCORE ? (
         <>
           <View style={styles.scoreSection}>
@@ -74,22 +85,14 @@ export default function CanastaTeamSection({ teamName, scoreState, formState, pa
             <View style={styles.inputRow}>
               <InputBox
                 label="Mixed"
-                value={
-                  formState.mixedCanastas?.toString() ?? ""
-                }
-                onChange={(value: string) =>
-                  onMixedCanastaChange(value)
-                }
+                value={formState.mixedCanastas?.toString() ?? ""}
+                onChange={(value: string) => onMixedCanastaChange(value)}
                 error={formState.mixedCanastaError}
               />
               <InputBox
                 label="Natural"
-                value={
-                  formState.naturalCanastas?.toString() ?? ""
-                }
-                onChange={(value: string) =>
-                  onNaturalCanastaChange(value)
-                }
+                value={formState.naturalCanastas?.toString() ?? ""}
+                onChange={(value: string) => onNaturalCanastaChange(value)}
                 error={formState.naturalCanastaError}
               />
             </View>
@@ -109,9 +112,7 @@ export default function CanastaTeamSection({ teamName, scoreState, formState, pa
           <InputBox
             label="Points In Hand"
             value={formState.pointsInHand?.toString() ?? ""}
-            onChange={(value: string) =>
-              onPointsInHandChange(value)
-            }
+            onChange={(value: string) => onPointsInHandChange(value)}
             error={formState.pointsInHandError}
           />
           <ThemedSwitch
@@ -124,7 +125,7 @@ export default function CanastaTeamSection({ teamName, scoreState, formState, pa
         </>
       ) : undefined}
     </View>
-  )
+  );
 }
 const styles = StyleSheet.create({
   teamContainer: {
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 32,
     flexGrow: 1,
-    flexShrink: 1
+    flexShrink: 1,
   },
   nameSection: {
     display: "flex",
@@ -168,8 +169,8 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
     gap: 16,
-    flexWrap: 'wrap'
+    flexWrap: "wrap",
   },
 });

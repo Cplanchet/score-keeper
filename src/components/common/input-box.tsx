@@ -15,8 +15,8 @@ export default function InputBox({
   value,
   label,
   error,
-  onChange = () => { },
-  onBlur = () => { },
+  onChange = () => {},
+  onBlur = () => {},
 }: TextInputParameters) {
   const theme = useTheme();
 
@@ -26,7 +26,12 @@ export default function InputBox({
         {label}
       </ThemedText>
       <TextInput
-        style={[styles.textBox, error ? { borderColor: GlobalColors.error, color: GlobalColors.error } : { borderColor: theme.text, color: theme.text }]}
+        style={[
+          styles.textBox,
+          error
+            ? { borderColor: GlobalColors.error, color: GlobalColors.error }
+            : { borderColor: theme.text, color: theme.text },
+        ]}
         value={value ?? ""}
         onChangeText={onChange}
       ></TextInput>
@@ -37,7 +42,6 @@ export default function InputBox({
           </ThemedText>
         </>
       ) : undefined}
-
     </View>
   );
 }
@@ -49,6 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignContent: "flex-start",
     gap: 4,
+    minWidth: 200,
   },
   label: {},
   textBox: {
@@ -60,6 +65,6 @@ const styles = StyleSheet.create({
     ...Typography.normal,
   },
   error: {
-    color: GlobalColors.error
-  }
+    color: GlobalColors.error,
+  },
 });
